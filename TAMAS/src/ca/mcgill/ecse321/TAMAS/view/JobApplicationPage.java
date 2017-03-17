@@ -8,9 +8,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
-
-import com.mysql.jdbc.StringUtils;
-
 import ca.mcgill.ecse321.TAMAS.persistence.JobApplicationPersistence;
 import ca.mcgill.ecse321.TAMAS.persistence.StudentRecordPersistence;
 

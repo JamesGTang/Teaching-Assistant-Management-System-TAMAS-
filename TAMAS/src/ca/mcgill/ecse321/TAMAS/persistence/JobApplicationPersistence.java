@@ -16,13 +16,8 @@ public class  JobApplicationPersistence {
     static String user="TAMAS_DATA_ADMIN";
     static String pass= "ECSE_ADMIN";
 
-    public static void main(String[] args){
-    	getApplicationByStudentID(12312030);
-    	submitToDB(12345643, 34431413, "Bob", "Cool", "email.com", "UGRAD", "CV");
-    }
-    
     // submit an application to database, must the input be checked before calling this function
-    private static int submitToDB( int applicant_id,int job_id,String fname,String lname,String email,String status, String cv){
+    public static String submitToDB( int applicant_id,int job_id,String fname,String lname,String email,String status, String cv){
 
         try {
             Connection myConn = DriverManager.getConnection(dbURL, user, pass);
@@ -42,12 +37,13 @@ public class  JobApplicationPersistence {
             System.out.println("Update Success! ");
         }catch (SQLException e){
             System.out.println("Connection failed");
-            return 1;
+            e.printStackTrace();
+            return "Submission failed!";
         }
-        return 0;
+        return "Submission success!";
     }
     // retrieve application by student ID
-    private static int getApplicationByStudentID(int student_ID){
+    public static int getApplicationByStudentID(int student_ID){
         // keep track of the the size of the ResultSet
         int i=0;int size;
         try {
@@ -77,7 +73,7 @@ public class  JobApplicationPersistence {
         }
         return i;
     }
-    private static int getApplicationByJobID(int job_ID){
+    public static int getApplicationByJobID(int job_ID){
         // keep track of the the size of the ResultSet
         int i=0;int size;
         try {
@@ -106,4 +102,9 @@ public class  JobApplicationPersistence {
             return -1;
         }
         return i;
-    }}
+    }
+    /*
+    public static void main(String[] args) {
+		submitToDB(123123, 21, "James", "Tang", "james@gmail.com", "grader", "hello");
+	}  */  
+}

@@ -23,11 +23,11 @@ class Evaluation
 
 class Session {
  Weekday { Monday{} Tuesday{} Wednesday{} Thursday{} Friday{} }
+ SessionType { LabSession{} TutorialSession{} }
  Time startTime;
  Time endTime;
  int sectionNumber;
  String location;
- boolean isLabSession; // else TutorialSession
  0..* jobSession -- 0..* Job sessionJob;
 }
 
@@ -71,7 +71,9 @@ class Job
  description;
  deadline;
  autounique jobId;
+ String schedule;
  JobState { IsPosted{} AppliedTo{} AssignedStudentTo{} AssignmentFinalized{} }
+ JobType { TaJob{} GraderJob{} }
  * -- 1 Course course;
 }
 

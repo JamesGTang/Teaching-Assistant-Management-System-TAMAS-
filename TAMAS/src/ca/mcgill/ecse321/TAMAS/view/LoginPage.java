@@ -1,25 +1,25 @@
 package ca.mcgill.ecse321.TAMAS.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 
-import com.mysql.jdbc.StringUtils;
+
 
 import ca.mcgill.ecse321.TAMAS.persistence.StudentRecordPersistence;
 
 public class LoginPage extends JFrame{
-	//error message
-		private JLabel errorMessage;
-		
+	    //error message
+		private JLabel feedbackMessage;
 		// error
 		private String error = null;
 			
@@ -35,6 +35,9 @@ public class LoginPage extends JFrame{
 		
 		//login button
 		private JButton login;
+		
+		//register button
+		private JButton registerButton;
 
 		public LoginPage() {
 			initComponents();
@@ -42,7 +45,8 @@ public class LoginPage extends JFrame{
 		}
 		
 		private void initComponents(){
-			
+			Container c = JFrame.getContentPane(); 
+			setBackground(Color.decode("#C63D0F"));
 			// label for username and password
 			usernameLabel = new JLabel("Username (Email or ID):");
 			passwordLabel = new JLabel("Password:");
@@ -50,11 +54,13 @@ public class LoginPage extends JFrame{
 			// textfield for username
 			username = new JTextField();
 			
-			// password field for passwor
+			// password field for password
 			password = new JPasswordField();
 			
+			// register b
 			// login button
-			login = new JButton("LOGIN");
+			login = new JButton("Login");
+			registerButton=new JButton("Register");
 			login.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent evt) {
 					loginActionPerformed(evt);
@@ -78,6 +84,8 @@ public class LoginPage extends JFrame{
 								.addComponent(username)
 				            	.addComponent(password)
 				            	.addComponent(login))
+					 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+							 .addComponent(registerButton)) 
 			 );
 			 
 			 layout.setVerticalGroup(layout.createSequentialGroup()
@@ -86,8 +94,11 @@ public class LoginPage extends JFrame{
 			            		.addComponent(username))
 					 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 			            		.addComponent(passwordLabel)
-			            		.addComponent(password))	
-					 .addComponent(login)
+			            		.addComponent(password))
+			         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+			        		 .addComponent(login)
+			        		 .addComponent(registerButton)
+			        		 )
 			 );
 			
 			pack();
@@ -99,8 +110,6 @@ public class LoginPage extends JFrame{
 			//errorMessage.setText(error);
 			
 			//description.setText("");
-			pack();
-			getContentPane().setSize(800, 500);
 		}
 		
 		private void loginActionPerformed(java.awt.event.ActionEvent evt){
@@ -109,17 +118,23 @@ public class LoginPage extends JFrame{
 			
 			StudentRecordPersistence srp = new StudentRecordPersistence();
 			
-			if(StringUtils.isStrictlyNumeric(user_name))//if it is numeric
-				if(pass_word.equals(srp.getStudentPasswordByID(Integer.parseInt(user_name))))
-						System.out.println("VALID LOGIN");
-				else
-						System.out.println("WRONG LOGIN");
-			
 			//if numeric getStudentPasswordByID 
 					//if pass matches let them in
 					//else print error message
 			//if not
 			refreshData();
+		}
+		private void registerButtonActionPerformed(java.awt.event.ActionEvent evt){
+			RegisterPage page = new RegisterPage();
+           	page.setVisible(true);
+           	
+           	// get height and width of display
+           	GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice(); 
+    		int width = gd.getDisplayMode().getWidth();
+    		int height=gd.getDisplayMode().getHeight();
+    		
+    		// set the size of the JFrame
+           	((JFrame) page).setSize(height*9/16,height-200);
 		}
 		
 

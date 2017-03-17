@@ -12,11 +12,11 @@ import ca.mcgill.ecse321.TAMAS.controller.InvalidInputException;
 import ca.mcgill.ecse321.TAMAS.application.TamasApplication;
 
 public class InstructorController {
-
+/*
 	public void postJob(String instructorName, String courseName, String jobType, int numHours, String description)
 			throws InvalidInputException {
 		Tamas tamas = TamasApplication.getTamas();
-
+		
 		// check if the job is for TA or Grader
 		boolean isTaJob = false;
 		if (jobType.equals("TA"))
@@ -53,5 +53,5 @@ public class InstructorController {
 		jpp.submitJobPostingtoDB(instructor_name, course, job_type, hour,
 			description, daysofweek, times);
 	}
-
+*/
 }
