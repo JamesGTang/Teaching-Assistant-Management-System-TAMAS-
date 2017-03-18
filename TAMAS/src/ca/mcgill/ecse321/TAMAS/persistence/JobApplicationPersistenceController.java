@@ -27,8 +27,7 @@ public class JobApplicationPersistenceController {
 		}
 		applicant_email=jApplication.getApplicant().getUsername();
 		job_id=jApplication.getAppliedJob().getJobId();
-		applicant_id=Integer.valueOf(jApplication.getApplicant().getStudentId());
-		
+		applicant_id=Integer.valueOf(jApplication.getApplicant().getStudentId());	
 		String fullname=jApplication.getApplicant().getName();
 		StringTokenizer stringTokenizer=new StringTokenizer(fullname, " ");
 		applicant_first_name=stringTokenizer.nextToken();

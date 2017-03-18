@@ -3,13 +3,17 @@ package ca.mcgill.ecse321.TAMAS.view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
@@ -18,38 +22,35 @@ import javax.swing.JTextField;
 import ca.mcgill.ecse321.TAMAS.persistence.StudentRecordPersistence;
 
 public class LoginPage extends JFrame{
-	    //error message
-		private JLabel feedbackMessage;
-		// error
+		
+	private JLabel feedbackMessage;
 		private String error = null;
-			
-		// label for username and password
+		private JPanel loginPanel; 
 		private JLabel usernameLabel;
 		private JLabel passwordLabel;
-		
-		// textfield for username
 		private JTextField username;
-		
-		// password field for password
 		private JPasswordField password;
-		
-		//login button
 		private JButton login;
-		
-		//register button
 		private JButton registerButton;
-
+		
 		public LoginPage() {
 			initComponents();
 			refreshData();	
 		}
 		
 		private void initComponents(){
-			Container c = JFrame.getContentPane(); 
-			setBackground(Color.decode("#C63D0F"));
+			
+			GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice(); 
+			int screenHeight=gd.getDisplayMode().getHeight();
+			
+			getContentPane().setBackground(Color.decode("#C63D0F"));
+						
 			// label for username and password
 			usernameLabel = new JLabel("Username (Email or ID):");
 			passwordLabel = new JLabel("Password:");
+			
+			usernameLabel.setForeground(Color.white);
+			passwordLabel.setForeground(Color.white);
 			
 			// textfield for username
 			username = new JTextField();
@@ -64,8 +65,7 @@ public class LoginPage extends JFrame{
 			login.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent evt) {
 					loginActionPerformed(evt);
-				}
-				});
+				}});
 
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setTitle("Login Page");
@@ -83,9 +83,12 @@ public class LoginPage extends JFrame{
 					 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 								.addComponent(username)
 				            	.addComponent(password)
-				            	.addComponent(login))
+				            	.addComponent(login)
+				            	
+							 )	
 					 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-							 .addComponent(registerButton)) 
+				            	.addComponent(registerButton)
+							 )	
 			 );
 			 
 			 layout.setVerticalGroup(layout.createSequentialGroup()
@@ -102,6 +105,15 @@ public class LoginPage extends JFrame{
 			 );
 			
 			pack();
+			
+			registerButton.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					registerButtonActionPerformed(e);
+				}
+			});
+			
 		}
 
 		private void refreshData(){
@@ -125,17 +137,15 @@ public class LoginPage extends JFrame{
 			refreshData();
 		}
 		private void registerButtonActionPerformed(java.awt.event.ActionEvent evt){
+			System.out.println("Switching to register view");
 			RegisterPage page = new RegisterPage();
            	page.setVisible(true);
            	
            	// get height and width of display
            	GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice(); 
-    		int width = gd.getDisplayMode().getWidth();
     		int height=gd.getDisplayMode().getHeight();
-    		
-    		// set the size of the JFrame
-           	((JFrame) page).setSize(height*9/16,height-200);
-		}
-		
 
+    		// set the size of the JFrame
+           	((JFrame) page).setSize(height*9/16,height);
+		}
 }

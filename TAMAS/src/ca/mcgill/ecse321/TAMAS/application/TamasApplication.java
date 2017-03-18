@@ -35,7 +35,7 @@ public class TamasApplication {
             public void run() {
             	LoginPage page = new LoginPage();
                	page.setVisible(true);
-               	((JFrame) page).setSize(height*9/16,height-200);
+               	((JFrame) page).setSize(height*9/16,height);
             }
         });
 
