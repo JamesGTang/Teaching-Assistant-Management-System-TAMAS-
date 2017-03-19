@@ -1,11 +1,11 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.24.0-dab6b48 modeling language!*/
+/*This code was generated using the UMPLE 1.25.0-9e8af9e modeling language!*/
 
 package ca.mcgill.ecse321.TAMAS.model;
 import java.sql.Time;
 import java.util.*;
 
-// line 24 "../../../../../TAMAS.ump"
+// line 23 "../../../../../TAMAS.ump"
 public class Session
 {
 
@@ -18,11 +18,12 @@ public class Session
   private Time endTime;
   private int sectionNumber;
   private String location;
-  private boolean isLabSession;
 
   //Session State Machines
   public enum Weekday { Monday, Tuesday, Wednesday, Thursday, Friday }
   private Weekday weekday;
+  public enum SessionType { LabSession, TutorialSession }
+  private SessionType sessionType;
 
   //Session Associations
   private List<Job> sessionJob;
@@ -32,13 +33,12 @@ public class Session
   // CONSTRUCTOR
   //------------------------
 
-  public Session(Time aStartTime, Time aEndTime, int aSectionNumber, String aLocation, boolean aIsLabSession, Course aCourse)
+  public Session(Time aStartTime, Time aEndTime, int aSectionNumber, String aLocation, Course aCourse)
   {
     startTime = aStartTime;
     endTime = aEndTime;
     sectionNumber = aSectionNumber;
     location = aLocation;
-    isLabSession = aIsLabSession;
     sessionJob = new ArrayList<Job>();
     boolean didAddCourse = setCourse(aCourse);
     if (!didAddCourse)
@@ -46,6 +46,7 @@ public class Session
       throw new RuntimeException("Unable to create specificSession due to course");
     }
     setWeekday(Weekday.Monday);
+    setSessionType(SessionType.LabSession);
   }
 
   //------------------------
@@ -84,14 +85,6 @@ public class Session
     return wasSet;
   }
 
-  public boolean setIsLabSession(boolean aIsLabSession)
-  {
-    boolean wasSet = false;
-    isLabSession = aIsLabSession;
-    wasSet = true;
-    return wasSet;
-  }
-
   public Time getStartTime()
   {
     return startTime;
@@ -112,17 +105,15 @@ public class Session
     return location;
   }
 
-  /**
-   * else TutorialSession
-   */
-  public boolean getIsLabSession()
-  {
-    return isLabSession;
-  }
-
   public String getWeekdayFullName()
   {
     String answer = weekday.toString();
+    return answer;
+  }
+
+  public String getSessionTypeFullName()
+  {
+    String answer = sessionType.toString();
     return answer;
   }
 
@@ -131,9 +122,20 @@ public class Session
     return weekday;
   }
 
+  public SessionType getSessionType()
+  {
+    return sessionType;
+  }
+
   public boolean setWeekday(Weekday aWeekday)
   {
     weekday = aWeekday;
+    return true;
+  }
+
+  public boolean setSessionType(SessionType aSessionType)
+  {
+    sessionType = aSessionType;
     return true;
   }
 
@@ -292,8 +294,7 @@ public class Session
     String outputString = "";
     return super.toString() + "["+
             "sectionNumber" + ":" + getSectionNumber()+ "," +
-            "location" + ":" + getLocation()+ "," +
-            "isLabSession" + ":" + getIsLabSession()+ "]" + System.getProperties().getProperty("line.separator") +
+            "location" + ":" + getLocation()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "startTime" + "=" + (getStartTime() != null ? !getStartTime().equals(this)  ? getStartTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "endTime" + "=" + (getEndTime() != null ? !getEndTime().equals(this)  ? getEndTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "course = "+(getCourse()!=null?Integer.toHexString(System.identityHashCode(getCourse())):"null")

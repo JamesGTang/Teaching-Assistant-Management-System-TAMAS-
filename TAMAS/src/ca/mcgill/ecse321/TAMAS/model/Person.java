@@ -1,9 +1,9 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.24.0-dab6b48 modeling language!*/
+/*This code was generated using the UMPLE 1.25.0-9e8af9e modeling language!*/
 
 package ca.mcgill.ecse321.TAMAS.model;
 
-// line 10 "../../../../../TAMAS.ump"
+// line 9 "../../../../../TAMAS.ump"
 public class Person
 {
 

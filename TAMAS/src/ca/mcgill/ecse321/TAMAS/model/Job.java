@@ -1,10 +1,10 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.24.0-dab6b48 modeling language!*/
+/*This code was generated using the UMPLE 1.25.0-9e8af9e modeling language!*/
 
 package ca.mcgill.ecse321.TAMAS.model;
 import java.util.*;
 
-// line 62 "../../../../../TAMAS.ump"
+// line 61 "../../../../../TAMAS.ump"
 public class Job
 {
 
@@ -24,39 +24,43 @@ public class Job
   private int numberOfHours;
   private int salary;
   private boolean isTaJob;
-  private boolean isAssignedToStudent;
-  private boolean isAllocatedToStudent;
+  private boolean isAssignedToApplicant;
+  private boolean isAllocatedToApplicant;
   private String description;
   private String deadline;
+  private String schedule;
 
   //Autounique Attributes
   private int jobId;
 
   //Job State Machines
-  public enum JobState { IsPosted, AppliedTo, AssignedStudentTo, AssignmentFinalized }
+  public enum JobState { IsPosted, AppliedTo, AssignedApplicantTo, AssignmentFinalized }
   private JobState jobState;
+  public enum JobType { TaJob, GraderJob }
+  private JobType jobType;
 
   //Job Associations
   private Course course;
   private Tamas tamas;
   private Evaluation evaluation;
   private List<Session> jobSession;
-  private List<Student> applicant;
+  private List<Applicant> applicant;
   private List<JobApplication> jobApplications;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Job(int aNumberOfHours, int aSalary, boolean aIsTaJob, boolean aIsAssignedToStudent, boolean aIsAllocatedToStudent, String aDescription, String aDeadline, Course aCourse, Tamas aTamas)
+  public Job(int aNumberOfHours, int aSalary, boolean aIsTaJob, boolean aIsAssignedToApplicant, boolean aIsAllocatedToApplicant, String aDescription, String aDeadline, String aSchedule, Course aCourse, Tamas aTamas)
   {
     numberOfHours = aNumberOfHours;
     salary = aSalary;
     isTaJob = aIsTaJob;
-    isAssignedToStudent = aIsAssignedToStudent;
-    isAllocatedToStudent = aIsAllocatedToStudent;
+    isAssignedToApplicant = aIsAssignedToApplicant;
+    isAllocatedToApplicant = aIsAllocatedToApplicant;
     description = aDescription;
     deadline = aDeadline;
+    schedule = aSchedule;
     jobId = nextJobId++;
     boolean didAddCourse = setCourse(aCourse);
     if (!didAddCourse)
@@ -69,9 +73,10 @@ public class Job
       throw new RuntimeException("Unable to create job due to tamas");
     }
     jobSession = new ArrayList<Session>();
-    applicant = new ArrayList<Student>();
+    applicant = new ArrayList<Applicant>();
     jobApplications = new ArrayList<JobApplication>();
     setJobState(JobState.IsPosted);
+    setJobType(JobType.TaJob);
   }
 
   //------------------------
@@ -102,18 +107,18 @@ public class Job
     return wasSet;
   }
 
-  public boolean setIsAssignedToStudent(boolean aIsAssignedToStudent)
+  public boolean setIsAssignedToApplicant(boolean aIsAssignedToApplicant)
   {
     boolean wasSet = false;
-    isAssignedToStudent = aIsAssignedToStudent;
+    isAssignedToApplicant = aIsAssignedToApplicant;
     wasSet = true;
     return wasSet;
   }
 
-  public boolean setIsAllocatedToStudent(boolean aIsAllocatedToStudent)
+  public boolean setIsAllocatedToApplicant(boolean aIsAllocatedToApplicant)
   {
     boolean wasSet = false;
-    isAllocatedToStudent = aIsAllocatedToStudent;
+    isAllocatedToApplicant = aIsAllocatedToApplicant;
     wasSet = true;
     return wasSet;
   }
@@ -130,6 +135,14 @@ public class Job
   {
     boolean wasSet = false;
     deadline = aDeadline;
+    wasSet = true;
+    return wasSet;
+  }
+
+  public boolean setSchedule(String aSchedule)
+  {
+    boolean wasSet = false;
+    schedule = aSchedule;
     wasSet = true;
     return wasSet;
   }
@@ -152,17 +165,17 @@ public class Job
     return isTaJob;
   }
 
-  public boolean getIsAssignedToStudent()
+  public boolean getIsAssignedToApplicant()
   {
-    return isAssignedToStudent;
+    return isAssignedToApplicant;
   }
 
   /**
    * When finalized
    */
-  public boolean getIsAllocatedToStudent()
+  public boolean getIsAllocatedToApplicant()
   {
-    return isAllocatedToStudent;
+    return isAllocatedToApplicant;
   }
 
   public String getDescription()
@@ -173,6 +186,11 @@ public class Job
   public String getDeadline()
   {
     return deadline;
+  }
+
+  public String getSchedule()
+  {
+    return schedule;
   }
 
   public int getJobId()
@@ -186,14 +204,31 @@ public class Job
     return answer;
   }
 
+  public String getJobTypeFullName()
+  {
+    String answer = jobType.toString();
+    return answer;
+  }
+
   public JobState getJobState()
   {
     return jobState;
   }
 
+  public JobType getJobType()
+  {
+    return jobType;
+  }
+
   public boolean setJobState(JobState aJobState)
   {
     jobState = aJobState;
+    return true;
+  }
+
+  public boolean setJobType(JobType aJobType)
+  {
+    jobType = aJobType;
     return true;
   }
 
@@ -248,15 +283,15 @@ public class Job
     return index;
   }
 
-  public Student getApplicant(int index)
+  public Applicant getApplicant(int index)
   {
-    Student aApplicant = applicant.get(index);
+    Applicant aApplicant = applicant.get(index);
     return aApplicant;
   }
 
-  public List<Student> getApplicant()
+  public List<Applicant> getApplicant()
   {
-    List<Student> newApplicant = Collections.unmodifiableList(applicant);
+    List<Applicant> newApplicant = Collections.unmodifiableList(applicant);
     return newApplicant;
   }
 
@@ -272,7 +307,7 @@ public class Job
     return has;
   }
 
-  public int indexOfApplicant(Student aApplicant)
+  public int indexOfApplicant(Applicant aApplicant)
   {
     int index = applicant.indexOf(aApplicant);
     return index;
@@ -460,7 +495,7 @@ public class Job
     return 0;
   }
 
-  public boolean addApplicant(Student aApplicant)
+  public boolean addApplicant(Applicant aApplicant)
   {
     boolean wasAdded = false;
     if (applicant.contains(aApplicant)) { return false; }
@@ -480,7 +515,7 @@ public class Job
     return wasAdded;
   }
 
-  public boolean removeApplicant(Student aApplicant)
+  public boolean removeApplicant(Applicant aApplicant)
   {
     boolean wasRemoved = false;
     if (!applicant.contains(aApplicant))
@@ -505,7 +540,7 @@ public class Job
     return wasRemoved;
   }
 
-  public boolean addApplicantAt(Student aApplicant, int index)
+  public boolean addApplicantAt(Applicant aApplicant, int index)
   {  
     boolean wasAdded = false;
     if(addApplicant(aApplicant))
@@ -519,7 +554,7 @@ public class Job
     return wasAdded;
   }
 
-  public boolean addOrMoveApplicantAt(Student aApplicant, int index)
+  public boolean addOrMoveApplicantAt(Applicant aApplicant, int index)
   {
     boolean wasAdded = false;
     if(applicant.contains(aApplicant))
@@ -542,7 +577,7 @@ public class Job
     return 0;
   }
 
-  public JobApplication addJobApplication(String aExperience, Student aApplicant)
+  public JobApplication addJobApplication(String aExperience, Applicant aApplicant)
   {
     return new JobApplication(aExperience, aApplicant, this);
   }
@@ -629,9 +664,9 @@ public class Job
     {
       aJobSession.removeSessionJob(this);
     }
-    ArrayList<Student> copyOfApplicant = new ArrayList<Student>(applicant);
+    ArrayList<Applicant> copyOfApplicant = new ArrayList<Applicant>(applicant);
     applicant.clear();
-    for(Student aApplicant : copyOfApplicant)
+    for(Applicant aApplicant : copyOfApplicant)
     {
       aApplicant.removeOfferedJob(this);
     }
@@ -651,10 +686,11 @@ public class Job
             "numberOfHours" + ":" + getNumberOfHours()+ "," +
             "salary" + ":" + getSalary()+ "," +
             "isTaJob" + ":" + getIsTaJob()+ "," +
-            "isAssignedToStudent" + ":" + getIsAssignedToStudent()+ "," +
-            "isAllocatedToStudent" + ":" + getIsAllocatedToStudent()+ "," +
+            "isAssignedToApplicant" + ":" + getIsAssignedToApplicant()+ "," +
+            "isAllocatedToApplicant" + ":" + getIsAllocatedToApplicant()+ "," +
             "description" + ":" + getDescription()+ "," +
-            "deadline" + ":" + getDeadline()+ "]" + System.getProperties().getProperty("line.separator") +
+            "deadline" + ":" + getDeadline()+ "," +
+            "schedule" + ":" + getSchedule()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "course = "+(getCourse()!=null?Integer.toHexString(System.identityHashCode(getCourse())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "tamas = "+(getTamas()!=null?Integer.toHexString(System.identityHashCode(getTamas())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "evaluation = "+(getEvaluation()!=null?Integer.toHexString(System.identityHashCode(getEvaluation())):"null")

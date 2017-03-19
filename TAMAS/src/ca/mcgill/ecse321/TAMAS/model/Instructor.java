@@ -1,10 +1,10 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.24.0-dab6b48 modeling language!*/
+/*This code was generated using the UMPLE 1.25.0-9e8af9e modeling language!*/
 
 package ca.mcgill.ecse321.TAMAS.model;
 import java.util.*;
 
-// line 50 "../../../../../TAMAS.ump"
+// line 49 "../../../../../TAMAS.ump"
 public class Instructor extends Person
 {
 

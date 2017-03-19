@@ -1,9 +1,9 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.24.0-dab6b48 modeling language!*/
+/*This code was generated using the UMPLE 1.25.0-9e8af9e modeling language!*/
 
 package ca.mcgill.ecse321.TAMAS.model;
 
-// line 78 "../../../../../TAMAS.ump"
+// line 79 "../../../../../TAMAS.ump"
 public class JobApplication
 {
 
@@ -19,14 +19,14 @@ public class JobApplication
   private Preference preference;
 
   //JobApplication Associations
-  private Student applicant;
+  private Applicant applicant;
   private Job appliedJob;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public JobApplication(String aExperience, Student aApplicant, Job aAppliedJob)
+  public JobApplication(String aExperience, Applicant aApplicant, Job aAppliedJob)
   {
     experience = aExperience;
     boolean didAddApplicant = setApplicant(aApplicant);
@@ -76,7 +76,7 @@ public class JobApplication
     return true;
   }
 
-  public Student getApplicant()
+  public Applicant getApplicant()
   {
     return applicant;
   }
@@ -86,7 +86,7 @@ public class JobApplication
     return appliedJob;
   }
 
-  public boolean setApplicant(Student aApplicant)
+  public boolean setApplicant(Applicant aApplicant)
   {
     boolean wasSet = false;
     //Must provide applicant to jobApplication
@@ -96,12 +96,12 @@ public class JobApplication
     }
 
     //applicant already at maximum (3)
-    if (aApplicant.numberOfJobApplications() >= Student.maximumNumberOfJobApplications())
+    if (aApplicant.numberOfJobApplications() >= Applicant.maximumNumberOfJobApplications())
     {
       return wasSet;
     }
     
-    Student existingApplicant = applicant;
+    Applicant existingApplicant = applicant;
     applicant = aApplicant;
     if (existingApplicant != null && !existingApplicant.equals(aApplicant))
     {
@@ -138,7 +138,7 @@ public class JobApplication
 
   public void delete()
   {
-    Student placeholderApplicant = applicant;
+    Applicant placeholderApplicant = applicant;
     this.applicant = null;
     placeholderApplicant.removeJobApplication(this);
     Job placeholderAppliedJob = appliedJob;

@@ -1,10 +1,10 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.24.0-dab6b48 modeling language!*/
+/*This code was generated using the UMPLE 1.25.0-9e8af9e modeling language!*/
 
 package ca.mcgill.ecse321.TAMAS.model;
 import java.util.*;
 
-// line 4 "../../../../../TAMAS.ump"
+// line 3 "../../../../../TAMAS.ump"
 public class Tamas
 {
 
@@ -271,9 +271,9 @@ public class Tamas
     return 0;
   }
 
-  public Job addJob(int aNumberOfHours, int aSalary, boolean aIsTaJob, boolean aIsAssignedToStudent, boolean aIsAllocatedToStudent, String aDescription, String aDeadline, Course aCourse)
+  public Job addJob(int aNumberOfHours, int aSalary, boolean aIsTaJob, boolean aIsAssignedToApplicant, boolean aIsAllocatedToApplicant, String aDescription, String aDeadline, String aSchedule, Course aCourse)
   {
-    return new Job(aNumberOfHours, aSalary, aIsTaJob, aIsAssignedToStudent, aIsAllocatedToStudent, aDescription, aDeadline, aCourse, this);
+    return new Job(aNumberOfHours, aSalary, aIsTaJob, aIsAssignedToApplicant, aIsAllocatedToApplicant, aDescription, aDeadline, aSchedule, aCourse, this);
   }
 
   public boolean addJob(Job aJob)

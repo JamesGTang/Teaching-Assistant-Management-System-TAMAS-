@@ -4,19 +4,19 @@
 package ca.mcgill.ecse321.TAMAS.model;
 import java.util.*;
 
-// line 34 "../../../../../TAMAS.ump"
-public class Student extends Person
+// line 33 "../../../../../TAMAS.ump"
+public class Applicant extends Person
 {
 
   //------------------------
   // MEMBER VARIABLES
   //------------------------
 
-  //Student Attributes
-  private String studentId;
+  //Applicant Attributes
+  private String applicantId;
   private boolean isGrad;
 
-  //Student Associations
+  //Applicant Associations
   private List<Job> offeredJob;
   private List<JobApplication> jobApplications;
 
@@ -24,10 +24,10 @@ public class Student extends Person
   // CONSTRUCTOR
   //------------------------
 
-  public Student(String aName, String aUsername, String aPassword, Tamas aTamas, String aStudentId, boolean aIsGrad)
+  public Applicant(String aName, String aUsername, String aPassword, Tamas aTamas, String aApplicantId, boolean aIsGrad)
   {
     super(aName, aUsername, aPassword, aTamas);
-    studentId = aStudentId;
+    applicantId = aApplicantId;
     isGrad = aIsGrad;
     offeredJob = new ArrayList<Job>();
     jobApplications = new ArrayList<JobApplication>();
@@ -37,10 +37,10 @@ public class Student extends Person
   // INTERFACE
   //------------------------
 
-  public boolean setStudentId(String aStudentId)
+  public boolean setApplicantId(String aApplicantId)
   {
     boolean wasSet = false;
-    studentId = aStudentId;
+    applicantId = aApplicantId;
     wasSet = true;
     return wasSet;
   }
@@ -53,9 +53,9 @@ public class Student extends Person
     return wasSet;
   }
 
-  public String getStudentId()
+  public String getApplicantId()
   {
-    return studentId;
+    return applicantId;
   }
 
   public boolean getIsGrad()
@@ -287,7 +287,7 @@ public class Student extends Person
       return wasAdded;
     }
 
-    Student existingApplicant = aJobApplication.getApplicant();
+    Applicant existingApplicant = aJobApplication.getApplicant();
     boolean isNewApplicant = existingApplicant != null && !this.equals(existingApplicant);
     if (isNewApplicant)
     {
@@ -366,7 +366,7 @@ public class Student extends Person
   {
     String outputString = "";
     return super.toString() + "["+
-            "studentId" + ":" + getStudentId()+ "," +
+            "applicantId" + ":" + getApplicantId()+ "," +
             "isGrad" + ":" + getIsGrad()+ "]"
      + outputString;
   }

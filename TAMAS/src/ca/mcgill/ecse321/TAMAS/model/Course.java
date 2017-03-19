@@ -1,11 +1,11 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.24.0-dab6b48 modeling language!*/
+/*This code was generated using the UMPLE 1.25.0-9e8af9e modeling language!*/
 
 package ca.mcgill.ecse321.TAMAS.model;
 import java.util.*;
 import java.sql.Time;
 
-// line 42 "../../../../../TAMAS.ump"
+// line 41 "../../../../../TAMAS.ump"
 public class Course
 {
 
@@ -196,9 +196,9 @@ public class Course
     return 0;
   }
 
-  public Session addSpecificSession(Time aStartTime, Time aEndTime, int aSectionNumber, String aLocation, boolean aIsLabSession)
+  public Session addSpecificSession(Time aStartTime, Time aEndTime, int aSectionNumber, String aLocation)
   {
-    return new Session(aStartTime, aEndTime, aSectionNumber, aLocation, aIsLabSession, this);
+    return new Session(aStartTime, aEndTime, aSectionNumber, aLocation, this);
   }
 
   public boolean addSpecificSession(Session aSpecificSession)
@@ -388,9 +388,9 @@ public class Course
     return 0;
   }
 
-  public Job addJob(int aNumberOfHours, int aSalary, boolean aIsTaJob, boolean aIsAssignedToStudent, boolean aIsAllocatedToStudent, String aDescription, String aDeadline, Tamas aTamas)
+  public Job addJob(int aNumberOfHours, int aSalary, boolean aIsTaJob, boolean aIsAssignedToApplicant, boolean aIsAllocatedToApplicant, String aDescription, String aDeadline, String aSchedule, Tamas aTamas)
   {
-    return new Job(aNumberOfHours, aSalary, aIsTaJob, aIsAssignedToStudent, aIsAllocatedToStudent, aDescription, aDeadline, this, aTamas);
+    return new Job(aNumberOfHours, aSalary, aIsTaJob, aIsAssignedToApplicant, aIsAllocatedToApplicant, aDescription, aDeadline, aSchedule, this, aTamas);
   }
 
   public boolean addJob(Job aJob)

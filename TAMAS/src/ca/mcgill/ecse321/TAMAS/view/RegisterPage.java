@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
+import javax.swing.ButtonModel;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -20,6 +22,9 @@ import javax.swing.JTextField;
 
 import org.omg.CORBA.PRIVATE_MEMBER;
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_ATOPPeer;
+
+import ca.mcgill.ecse321.TAMAS.persistence.StudentRecordPersistenceController;
 import javafx.scene.control.RadioButton;
 import jdk.nashorn.internal.runtime.UserAccessorProperty;
 
@@ -45,6 +50,7 @@ public class RegisterPage extends JFrame{
 	JButton registerButton;
 	JButton backtosigninButton;
 	
+	ButtonGroup Buttongroup;
 	public void initComponents() {
 		tamasLabel=new JLabel("TAMAS");
 		getContentPane().setBackground(Color.decode("#C63D0F"));
@@ -78,12 +84,22 @@ public class RegisterPage extends JFrame{
 		layout.setAutoCreateGaps(true);
 		layout.setAutoCreateContainerGaps(true);
 		
+		
+		Buttongroup= new ButtonGroup();
+		ugradRadioButton.setActionCommand("UGRAD");
+		gradRadioButton.setActionCommand("GRAD");
+		Buttongroup.add(ugradRadioButton);
+		Buttongroup.add(gradRadioButton);
+		ButtonModel bm=ugradRadioButton.getModel();
+		Buttongroup.setSelected(bm, true);
+	    
 		this.setLayout(layout);
 		layout.setAutoCreateGaps(true);
 		layout.setAutoCreateContainerGaps(true);
 		layout.setHorizontalGroup(layout.createSequentialGroup()
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 						.addComponent(tamasLabel)
+						.addComponent(welcomeLabel)
 						.addComponent(fnameLabel)
 						.addComponent(lnameLabel)
 						.addComponent(idLabel)
@@ -104,7 +120,11 @@ public class RegisterPage extends JFrame{
 				);
 		layout.setVerticalGroup(layout.createSequentialGroup()
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-						.addComponent(tamasLabel))
+						.addComponent(tamasLabel)
+						)
+				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						.addComponent(welcomeLabel)
+						)
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 						.addComponent(fnameLabel)
 						.addComponent(fnameField))
@@ -156,6 +176,7 @@ public class RegisterPage extends JFrame{
 			}
 		});
 		
+		
 	}
 	
 	public RegisterPage(){
@@ -172,12 +193,60 @@ public class RegisterPage extends JFrame{
 	}
 	
 	private void registerStudent(){
-		String paswordString;
+		int status;
+		String feedback="";
+		String passwordString;
 		String lnameString;
 		String fnameString;
-		int id;
+		String id;
 		String statusString; 
 		String emailString;
 		
+		fnameString=fnameField.getText().toString();
+		lnameString=lnameField.getText().toString();
+		passwordString=passwordField.getText().toString();
+		id=idField.getText().toString();
+		statusString=Buttongroup.getSelection().getActionCommand();
+		emailString=emailField.getText().toString();
+		
+		System.out.println("Information entered:"+fnameString+lnameString+passwordString+id+statusString+emailString);
+		
+		StudentRecordPersistenceController srpc=new StudentRecordPersistenceController(passwordString, lnameString, fnameString, id, statusString, emailString);
+		status=srpc.verifyAllInput();
+		System.out.println("The status is: "+status);
+		switch (status) {
+		case 0:
+			feedback=feedback+"Successfully registered! Please return to log in page!";
+			srpc.registerStudent();
+			welcomeLabel.setText(feedback);
+			break;
+		case 1:
+			feedback=feedback+"First name cannot be empty!"; 
+			welcomeLabel.setText(feedback);
+			break;
+		case 2:
+			feedback=feedback+"Last name cannot be empty!"; 
+			welcomeLabel.setText(feedback);
+			break;
+		case 3:
+			feedback=feedback+"Id must be 9 digits and numerical!"; 
+			welcomeLabel.setText(feedback);
+			break;
+		case 4:
+			feedback=feedback+"Status not selected!"; 
+			welcomeLabel.setText(feedback);
+			break;
+		case 5:
+			feedback=feedback+"Email must end with @ece.mcgill.ca";
+			welcomeLabel.setText(feedback);
+			break;
+		case 6:
+			feedback=feedback+"Password must be 0 and 18 letters"; 
+			welcomeLabel.setText(feedback);
+			break;
+		default:
+			feedback=feedback+"Something is wrong! Try again!";
+			welcomeLabel.setText(feedback);
+		}
 	}
 }
