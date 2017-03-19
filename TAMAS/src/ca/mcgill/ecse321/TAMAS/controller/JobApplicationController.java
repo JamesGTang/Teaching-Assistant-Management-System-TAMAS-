@@ -3,7 +3,7 @@ package ca.mcgill.ecse321.TAMAS.controller;
 import ca.mcgill.ecse321.TAMAS.model.Course;
 import ca.mcgill.ecse321.TAMAS.model.Job;
 import ca.mcgill.ecse321.TAMAS.model.JobApplication;
-import ca.mcgill.ecse321.TAMAS.model.Student;
+import ca.mcgill.ecse321.TAMAS.model.Applicant;
 import ca.mcgill.ecse321.TAMAS.model.Tamas;
 import ca.mcgill.ecse321.TAMAS.persistence.JobApplicationPersistenceController;
 
@@ -13,40 +13,38 @@ public class JobApplicationController {
 	public JobApplicationController(JobApplication ja){
 		this.jApplication=ja;
 	}
-	public void addStudent(Student student) throws InvalidInputException{
+	public void addApplicant(Applicant Applicant) throws InvalidInputException{
 		String error="";
 		
-		String aStudentId;
+		String aApplicantId;
 		String aName;
 		String aPassword;
 		Boolean aIsGrad;
-		Tamas aTamas;
 		String aUsername;
 		
-	    aStudentId=student.getStudentId();
-		aName=student.getName();
-		aPassword=student.getPassword();
-		aTamas=new Tamas();
-		aUsername=student.getUsername();
-		aIsGrad=student.getIsGrad();
+	    aApplicantId=Applicant.getApplicantId();
+		aName=Applicant.getName();
+		aPassword=Applicant.getPassword();
+		aUsername=Applicant.getUsername();
+		aIsGrad=Applicant.getIsGrad();
 		
-		if(aStudentId==null||aStudentId.trim().length()==0){
-			error=error+"Student Id cannot be empty! ";
+		if(aApplicantId==null||aApplicantId.trim().length()==0){
+			error=error+"Applicant Id cannot be empty! ";
 		}
 		if(aName==null||aName.trim().length()==0){
-			error=error+"Student name cannot be empty! ";
+			error=error+"Applicant name cannot be empty! ";
 		}
 		if(aPassword==null||aPassword.trim().length()==0){
-			error=error+"Student password cannot be empty! ";
+			error=error+"Applicant password cannot be empty! ";
 		}
 		if(aUsername==null||aUsername.trim().length()==0){
-			error=error+"Student email cannot be empty! ";
+			error=error+"Applicant email cannot be empty! ";
 		}
 		if(aIsGrad!=true||aIsGrad!=false){
-			error=error+"Student status cannot be empty! ";
+			error=error+"Applicant status cannot be empty! ";
 		}
 	
-		jApplication.setApplicant(student);
+		jApplication.setApplicant(Applicant);
 	}
 	public void addExperience(String experience) throws InvalidInputException {
 		String error="";

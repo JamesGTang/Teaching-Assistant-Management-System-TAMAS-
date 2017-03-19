@@ -4,31 +4,26 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ButtonModel;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-import org.omg.CORBA.PRIVATE_MEMBER;
-
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_ATOPPeer;
-
 import ca.mcgill.ecse321.TAMAS.persistence.StudentRecordPersistenceController;
-import javafx.scene.control.RadioButton;
-import jdk.nashorn.internal.runtime.UserAccessorProperty;
 
 public class RegisterPage extends JFrame{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	JLabel tamasLabel;
 	JLabel welcomeLabel;
 	JLabel feedbackLabel;
@@ -193,6 +188,7 @@ public class RegisterPage extends JFrame{
 	}
 	
 	private void registerStudent(){
+		
 		int status;
 		String feedback="";
 		String passwordString;

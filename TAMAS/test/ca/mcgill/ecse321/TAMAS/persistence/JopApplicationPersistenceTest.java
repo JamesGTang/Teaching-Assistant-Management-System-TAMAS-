@@ -51,11 +51,11 @@ public class JopApplicationPersistenceTest {
 		Course cCourse = new Course("ECSE324", 4, aTamas, ece);
 
 
-		Student student = new Student
+		Applicant Applicant = new Applicant
 				("Guntera Fiesta", "guntera.fiesta@mail.mcgill.ca", "lolpassword", aTamas, "260223321", false);
 
 		Job job = new Job(8, 21, true, false, false, "Most boring job ever!", "2017-02-28", aCourse, aTamas);
-		int applicant_id = Integer.parseInt(student.getStudentId());
+		int applicant_id = Integer.parseInt(Applicant.getApplicantId());
 		int job_id = job.getJobId();
 
 		// Add elements to null aTamas
@@ -63,29 +63,29 @@ public class JopApplicationPersistenceTest {
 		aTamas.addCourse(bCourse);
 		aTamas.addCourse(cCourse);
 		aTamas.addPerson(ece);
-		aTamas.addPerson(student);
+		aTamas.addPerson(Applicant);
 		aTamas.addJob(job);
 		
-		// create a student
+		// create a Applicant
 		String aName; 
 		String aUsername;
 		String aPassword;
-		String  aStudentId;
+		String  aApplicantId;
 		boolean aIsGrad; 
 		
 		aName="Janet Mraz";
 		aUsername="jmraz@ece.mcgill.com";
 		aPassword="jmarz1234";
-		aStudentId="1312232";
+		aApplicantId="1312232";
 		aIsGrad=true;
-		Student student1=new Student(aName, aUsername, aPassword, aTamas, aStudentId, aIsGrad);
+		Applicant Applicant1=new Applicant(aName, aUsername, aPassword, aTamas, aApplicantId, aIsGrad);
 		
 		aName="Katherine Watkins";
 		aUsername="kwatkins@ece.mcgill.com";
 		aPassword="kwatkins1234";
-		aStudentId="930182231";
+		aApplicantId="930182231";
 		aIsGrad=false;
-		Student student2=new Student(aName, aUsername, aPassword, aTamas, aStudentId, aIsGrad);
+		Applicant Applicant2=new Applicant(aName, aUsername, aPassword, aTamas, aApplicantId, aIsGrad);
 		
 		// create a EceAdmin
 		ece = new EceAdmin("Those People", "those.people@mcgill.ca", "none", aTamas);
@@ -94,27 +94,27 @@ public class JopApplicationPersistenceTest {
 		cCourse= new Course("ECSE324", 4, aTamas, ece);
 		
 		// create experience
-		String experience1="Experience of the student1";
-		String experience2="Experience of the student2";
+		String experience1="Experience of the Applicant1";
+		String experience2="Experience of the Applicant2";
 				
 		// create job post
 		int aNumberOfHours=18;
 		int aSalary=13;
 		boolean aIsTaJob=true;
-		boolean aIsAssignedToStudent=false;
-		boolean aIsAllocatedToStudent=false;
+		boolean aIsAssignedToApplicant=false;
+		boolean aIsAllocatedToApplicant=false;
 		String aDescription="A test description!"; 
 		String aDeadline="2019/May/15th";
 		
 		// ToDo:  why is ECEAdmin required for a Job Constructor? 
 		EceAdmin aEceAdmin=new EceAdmin("Dylon Johns", "dj@ece.mcgill.ca", "dj231", aTamas); 
-		Job job1=new Job(aNumberOfHours, aSalary, aIsTaJob, aIsAssignedToStudent, aIsAllocatedToStudent, aDescription, aDeadline, aCourse, aTamas);
+		Job job1=new Job(aNumberOfHours, aSalary, aIsTaJob, aIsAssignedToApplicant, aIsAllocatedToApplicant, aDescription, aDeadline, aCourse, aTamas);
 
 		aNumberOfHours=10;
 		aSalary=15;
 		aIsTaJob=true;
-		aIsAssignedToStudent=false;
-		aIsAllocatedToStudent=false;
+		aIsAssignedToApplicant=false;
+		aIsAllocatedToApplicant=false;
 		aDescription="A test description!"; 
 		aDeadline="2019/April/12th";
 		
@@ -122,7 +122,7 @@ public class JopApplicationPersistenceTest {
 		ece=new EceAdmin("John Kimmel", "jk@ece.mcgill.ca", "jk123", aTamas); 
 		aCourse=new Course("ECSE411",3, aTamas,aEceAdmin);
 		//ToDo: add Job_Post_Id and schedule to umple
-		Job job2=new Job(aNumberOfHours, aSalary, aIsTaJob, aIsAssignedToStudent, aIsAllocatedToStudent, aDescription, aDeadline, aCourse, aTamas);		
+		Job job2=new Job(aNumberOfHours, aSalary, aIsTaJob, aIsAssignedToApplicant, aIsAllocatedToApplicant, aDescription, aDeadline, aCourse, aTamas);		
 		
 		
 		aTamas.addCourse(aCourse);
@@ -131,12 +131,12 @@ public class JopApplicationPersistenceTest {
 		aTamas.addJob(job1);
 		aTamas.addJob(job2);
 		aTamas.addPerson(ece);
-		aTamas.addPerson(student1);
-		aTamas.addPerson(student2);
+		aTamas.addPerson(Applicant1);
+		aTamas.addPerson(Applicant2);
 		
-		// add student
-		ja1=new JobApplication(experience1, student1, job1);
-		ja2=new JobApplication(experience2,student2,job2);
+		// add Applicant
+		ja1=new JobApplication(experience1, Applicant1, job1);
+		ja2=new JobApplication(experience2,Applicant2,job2);
 	}
 
 	@After

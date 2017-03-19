@@ -42,7 +42,9 @@ class Course
 {
  String courseCode;
  int courseCredit;
- lazy int numberOfHours;
+ int numberOfHours;
+ int courseBudget;
+ lazy int studentEnrolment;
   1 <@>- * Session specificSession;
 }
 

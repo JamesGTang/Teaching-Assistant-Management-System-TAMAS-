@@ -6,7 +6,7 @@ import ca.mcgill.ecse321.TAMAS.model.Evaluation;
 import ca.mcgill.ecse321.TAMAS.model.Instructor;
 import ca.mcgill.ecse321.TAMAS.model.Job;
 import ca.mcgill.ecse321.TAMAS.model.Person;
-import ca.mcgill.ecse321.TAMAS.model.Student;
+import ca.mcgill.ecse321.TAMAS.model.Applicant;
 import ca.mcgill.ecse321.TAMAS.model.Tamas;
 import ca.mcgill.ecse321.TAMAS.controller.InvalidInputException;
 import ca.mcgill.ecse321.TAMAS.application.TamasApplication;

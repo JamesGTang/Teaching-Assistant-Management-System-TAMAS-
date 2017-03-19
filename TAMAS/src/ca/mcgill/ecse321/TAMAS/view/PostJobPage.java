@@ -21,7 +21,6 @@ import javax.swing.WindowConstants;
 
 import ca.mcgill.ecse321.TAMAS.controller.InstructorController;
 import ca.mcgill.ecse321.TAMAS.controller.InvalidInputException;
-import ca.mcgill.ecse321.TAMAS.controller.StudentController;
 import ca.mcgill.ecse321.TAMAS.persistence.JobPostingPersistence;
 
 
@@ -348,8 +347,7 @@ public class PostJobPage extends javax.swing.JFrame {
 		
 		// Send to controller, then call submitJobPostingtoDB from there
 		InstructorController ic = new InstructorController();
-		ic.postJob(instructor_name, course, job_type, hour,
-			description, daysofweek, times);
+	
 		
 		// update visuals
 		refreshData();

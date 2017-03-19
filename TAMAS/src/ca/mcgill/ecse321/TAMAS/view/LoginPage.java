@@ -1,8 +1,6 @@
 package ca.mcgill.ecse321.TAMAS.view;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
@@ -13,19 +11,16 @@ import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-
-
-
-import ca.mcgill.ecse321.TAMAS.persistence.StudentRecordPersistence;
+import ca.mcgill.ecse321.TAMAS.persistence.StudentRecordPersistenceController;
 
 public class LoginPage extends JFrame{
 		
-	private JLabel feedbackMessage;
+	    private JLabel feedbackMessage;
 		private String error = null;
-		private JPanel loginPanel; 
+		private JLabel tamasLabel; 
+		private JLabel feedback;
 		private JLabel usernameLabel;
 		private JLabel passwordLabel;
 		private JTextField username;
@@ -43,15 +38,25 @@ public class LoginPage extends JFrame{
 			GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice(); 
 			int screenHeight=gd.getDisplayMode().getHeight();
 			
+			
 			getContentPane().setBackground(Color.decode("#C63D0F"));
 						
 			// label for username and password
-			usernameLabel = new JLabel("Username (Email or ID):");
+			usernameLabel = new JLabel("Username (ID):");
 			passwordLabel = new JLabel("Password:");
+			feedback=new JLabel("Please signin!");
+			tamasLabel=new JLabel("TAMAS");
 			
+			// define font properties for Labels
+			tamasLabel.setFont(new Font("Gotham",Font.BOLD,50));
+			usernameLabel.setFont(new Font("Gotham",Font.BOLD,12));
+			passwordLabel.setFont(new Font("Gotham",Font.BOLD,12));
+			
+			tamasLabel.setForeground(Color.white);
+			feedback.setForeground(Color.white);
 			usernameLabel.setForeground(Color.white);
 			passwordLabel.setForeground(Color.white);
-			
+		
 			// textfield for username
 			username = new JTextField();
 			
@@ -77,9 +82,12 @@ public class LoginPage extends JFrame{
 			layout.setAutoCreateContainerGaps(true);
 			
 			 layout.setHorizontalGroup(layout.createSequentialGroup()
+			
 					 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 							.addComponent(usernameLabel)
-			            	.addComponent(passwordLabel))
+			            	.addComponent(passwordLabel)
+			            	.addComponent(tamasLabel)
+							.addComponent(feedback))
 					 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 								.addComponent(username)
 				            	.addComponent(password)
@@ -92,6 +100,10 @@ public class LoginPage extends JFrame{
 			 );
 			 
 			 layout.setVerticalGroup(layout.createSequentialGroup()
+					 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+			            		.addComponent(tamasLabel))
+					 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+			            		.addComponent(feedback))
 					 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 			            		.addComponent(usernameLabel)
 			            		.addComponent(username))
@@ -113,27 +125,48 @@ public class LoginPage extends JFrame{
 					registerButtonActionPerformed(e);
 				}
 			});
-			
+	
 		}
 
 		private void refreshData(){
-		
-			// error
-			//errorMessage.setText(error);
 			
-			//description.setText("");
 		}
 		
 		private void loginActionPerformed(java.awt.event.ActionEvent evt){
+			int status, idInput=0;
+			String feedbackString="";
 			String user_name = username.getText();
-			String pass_word = password.getText();
+			char[] pass_word = password.getPassword();
+			try {
+				idInput=Integer.valueOf(user_name);
+			} catch (NumberFormatException e) {
+				
+			}
 			
-			StudentRecordPersistence srp = new StudentRecordPersistence();
-			
-			//if numeric getStudentPasswordByID 
-					//if pass matches let them in
-					//else print error message
-			//if not
+			StudentRecordPersistenceController srpController=new StudentRecordPersistenceController(idInput,pass_word);			//if numeric getStudentPasswordByID 
+			status=srpController.checkLoginInfo();
+			System.out.println("Status is: "+status);
+			switch (status) {
+			case 0:
+				feedbackString=feedbackString+"Successfully signed in!";
+				feedback.setText(feedbackString);
+				System.out.println("Switching to JobPostDispaly");
+				JobPostDisplayPage page = new JobPostDisplayPage();
+	           	page.setVisible(true);
+				break;
+			case 1:
+				feedbackString=feedbackString+"Id not formated correctly!";
+				feedback.setText(feedbackString);
+				break;
+			case 2:
+				feedbackString=feedbackString+"Connection failed!";
+				feedback.setText(feedbackString);
+				break;
+			default:
+				feedbackString=feedbackString+"Wrong password, try again!";
+				feedback.setText(feedbackString);
+			}
+				
 			refreshData();
 		}
 		private void registerButtonActionPerformed(java.awt.event.ActionEvent evt){

@@ -2,12 +2,18 @@ package ca.mcgill.ecse321.TAMAS.persistence;
 
 import ca.mcgill.ecse321.TAMAS.persistence.StudentRecordPersistence;
 
+import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.text.ParsePosition;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
+import org.omg.CORBA.PRIVATE_MEMBER;
+
+import com.mysql.fabric.xmlrpc.base.Array;
+import com.sun.org.apache.bcel.internal.generic.NEW;
+
 import ca.mcgill.ecse321.TAMAS.application.TamasApplication;
-import ca.mcgill.ecse321.TAMAS.model.Student;
 import ca.mcgill.ecse321.TAMAS.model.Tamas;
 
 public class StudentRecordPersistenceController{
@@ -30,11 +36,52 @@ public class StudentRecordPersistenceController{
 			try {
 				this.id=Integer.parseInt(id);
 			} catch (Exception e) {
+			    this.id=0;
 				System.out.println("Student id not formated correctly!");
 			}
 		}
 		
 		this.statusString=statusString; 
+	}
+	
+	public StudentRecordPersistenceController(Integer id,char[] passwordArray){
+		
+		this.passwordString=new String(passwordArray);
+		
+		if(passwordString.isEmpty()){
+			
+		}else{
+			try {
+				this.id=id;
+			} catch (Exception e) {
+				System.out.println("Student id not formated correctly!");
+			}
+		}
+	}
+	
+	public int checkLoginInfo(){
+		System.out.println("Validating student information!");
+		
+		if(id==0){
+			// id not formated correctly
+			return 1;
+		}
+		try {
+			String passwordfromDB=StudentRecordPersistence.getStudentPasswordByID(id);
+			System.out.println("The password from database is "+passwordfromDB);
+			System.out.println("Password entered: "+new String(passwordString.toCharArray()));
+			if(passwordfromDB.equals(new String(passwordString.toCharArray()))){
+				// login success
+				System.out.println("Login success!");
+				return 0;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			// sql connection failed
+			return 2;
+		}
+		// something went wrong
+		return 3;
 	}
 	
 	/* ToDo: implement method

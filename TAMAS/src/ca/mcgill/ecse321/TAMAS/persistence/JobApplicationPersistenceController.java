@@ -2,9 +2,6 @@ package ca.mcgill.ecse321.TAMAS.persistence;
 import ca.mcgill.ecse321.TAMAS.persistence.JobApplicationPersistence;
 
 import java.util.StringTokenizer;
-
-import org.omg.CORBA.PRIVATE_MEMBER;
-
 import ca.mcgill.ecse321.TAMAS.model.JobApplication;
 
 public class JobApplicationPersistenceController {
@@ -27,7 +24,7 @@ public class JobApplicationPersistenceController {
 		}
 		applicant_email=jApplication.getApplicant().getUsername();
 		job_id=jApplication.getAppliedJob().getJobId();
-		applicant_id=Integer.valueOf(jApplication.getApplicant().getStudentId());	
+		applicant_id=Integer.valueOf(jApplication.getApplicant().getApplicantId());	
 		String fullname=jApplication.getApplicant().getName();
 		StringTokenizer stringTokenizer=new StringTokenizer(fullname, " ");
 		applicant_first_name=stringTokenizer.nextToken();
