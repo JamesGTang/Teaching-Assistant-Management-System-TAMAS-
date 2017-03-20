@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.TAMAS.view;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.TextField;
 
 import javax.swing.GroupLayout;
@@ -117,6 +118,7 @@ public class PostJobPage extends javax.swing.JFrame {
 		//number of hours spinner
 		SpinnerModel model = new SpinnerNumberModel();
 		hoursSpinner = new JSpinner(model);
+		hoursSpinner.setMaximumSize(new Dimension(50, 50));
 		
 		// description scrollpane
 		descriptionText = new JTextArea("");
