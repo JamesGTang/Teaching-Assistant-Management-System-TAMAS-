@@ -116,9 +116,17 @@ public class PostJobPage extends javax.swing.JFrame {
 		blank = new JLabel(" ");
 		
 		//number of hours spinner
-		SpinnerModel model = new SpinnerNumberModel();
+		SpinnerModel model =
+		        new SpinnerNumberModel(0,    // Initial value
+		                               0,    // Minimum cannot be less than zero
+		                               1000, /* Overly generous maximum value 
+		                               	      * Exact permitted value will be set in the controller */
+		                               1     // Step
+		                               );
 		hoursSpinner = new JSpinner(model);
 		hoursSpinner.setMaximumSize(new Dimension(50, 50));
+		
+		
 		
 		// description scrollpane
 		descriptionText = new JTextArea("");
