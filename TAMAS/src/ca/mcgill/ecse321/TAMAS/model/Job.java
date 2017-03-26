@@ -1,10 +1,10 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.25.0-9e8af9e modeling language!*/
+/*This code was generated using the UMPLE 1.24.0-dab6b48 modeling language!*/
 
 package ca.mcgill.ecse321.TAMAS.model;
 import java.util.*;
 
-// line 61 "../../../../../TAMAS.ump"
+// line 63 "../../../../../model.ump"
 public class Job
 {
 
@@ -23,7 +23,6 @@ public class Job
   //Job Attributes
   private int numberOfHours;
   private int salary;
-  private boolean isTaJob;
   private boolean isAssignedToApplicant;
   private boolean isAllocatedToApplicant;
   private String description;
@@ -51,11 +50,10 @@ public class Job
   // CONSTRUCTOR
   //------------------------
 
-  public Job(int aNumberOfHours, int aSalary, boolean aIsTaJob, boolean aIsAssignedToApplicant, boolean aIsAllocatedToApplicant, String aDescription, String aDeadline, String aSchedule, Course aCourse, Tamas aTamas)
+  public Job(int aNumberOfHours, int aSalary, boolean aIsAssignedToApplicant, boolean aIsAllocatedToApplicant, String aDescription, String aDeadline, String aSchedule, Course aCourse, Tamas aTamas)
   {
     numberOfHours = aNumberOfHours;
     salary = aSalary;
-    isTaJob = aIsTaJob;
     isAssignedToApplicant = aIsAssignedToApplicant;
     isAllocatedToApplicant = aIsAllocatedToApplicant;
     description = aDescription;
@@ -95,14 +93,6 @@ public class Job
   {
     boolean wasSet = false;
     salary = aSalary;
-    wasSet = true;
-    return wasSet;
-  }
-
-  public boolean setIsTaJob(boolean aIsTaJob)
-  {
-    boolean wasSet = false;
-    isTaJob = aIsTaJob;
     wasSet = true;
     return wasSet;
   }
@@ -155,14 +145,6 @@ public class Job
   public int getSalary()
   {
     return salary;
-  }
-
-  /**
-   * else GraderJob
-   */
-  public boolean getIsTaJob()
-  {
-    return isTaJob;
   }
 
   public boolean getIsAssignedToApplicant()
@@ -685,7 +667,6 @@ public class Job
             "jobId" + ":" + getJobId()+ "," +
             "numberOfHours" + ":" + getNumberOfHours()+ "," +
             "salary" + ":" + getSalary()+ "," +
-            "isTaJob" + ":" + getIsTaJob()+ "," +
             "isAssignedToApplicant" + ":" + getIsAssignedToApplicant()+ "," +
             "isAllocatedToApplicant" + ":" + getIsAllocatedToApplicant()+ "," +
             "description" + ":" + getDescription()+ "," +

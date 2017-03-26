@@ -1,11 +1,11 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.25.0-9e8af9e modeling language!*/
+/*This code was generated using the UMPLE 1.24.0-dab6b48 modeling language!*/
 
 package ca.mcgill.ecse321.TAMAS.model;
 import java.util.*;
 import java.sql.Time;
 
-// line 41 "../../../../../TAMAS.ump"
+// line 41 "../../../../../model.ump"
 public class Course
 {
 
@@ -17,6 +17,8 @@ public class Course
   private String courseCode;
   private int courseCredit;
   private int numberOfHours;
+  private int courseBudget;
+  private int studentEnrolment;
 
   //Course Associations
   private List<Session> specificSession;
@@ -29,10 +31,12 @@ public class Course
   // CONSTRUCTOR
   //------------------------
 
-  public Course(String aCourseCode, int aCourseCredit, Tamas aTamas, EceAdmin aEceAdmin)
+  public Course(String aCourseCode, int aCourseCredit, int aNumberOfHours, int aCourseBudget, Tamas aTamas, EceAdmin aEceAdmin)
   {
     courseCode = aCourseCode;
     courseCredit = aCourseCredit;
+    numberOfHours = aNumberOfHours;
+    courseBudget = aCourseBudget;
     specificSession = new ArrayList<Session>();
     boolean didAddTamas = setTamas(aTamas);
     if (!didAddTamas)
@@ -76,6 +80,22 @@ public class Course
     return wasSet;
   }
 
+  public boolean setCourseBudget(int aCourseBudget)
+  {
+    boolean wasSet = false;
+    courseBudget = aCourseBudget;
+    wasSet = true;
+    return wasSet;
+  }
+
+  public boolean setStudentEnrolment(int aStudentEnrolment)
+  {
+    boolean wasSet = false;
+    studentEnrolment = aStudentEnrolment;
+    wasSet = true;
+    return wasSet;
+  }
+
   public String getCourseCode()
   {
     return courseCode;
@@ -89,6 +109,16 @@ public class Course
   public int getNumberOfHours()
   {
     return numberOfHours;
+  }
+
+  public int getCourseBudget()
+  {
+    return courseBudget;
+  }
+
+  public int getStudentEnrolment()
+  {
+    return studentEnrolment;
   }
 
   public Session getSpecificSession(int index)
@@ -388,9 +418,9 @@ public class Course
     return 0;
   }
 
-  public Job addJob(int aNumberOfHours, int aSalary, boolean aIsTaJob, boolean aIsAssignedToApplicant, boolean aIsAllocatedToApplicant, String aDescription, String aDeadline, String aSchedule, Tamas aTamas)
+  public Job addJob(int aNumberOfHours, int aSalary, boolean aIsAssignedToApplicant, boolean aIsAllocatedToApplicant, String aDescription, String aDeadline, String aSchedule, Tamas aTamas)
   {
-    return new Job(aNumberOfHours, aSalary, aIsTaJob, aIsAssignedToApplicant, aIsAllocatedToApplicant, aDescription, aDeadline, aSchedule, this, aTamas);
+    return new Job(aNumberOfHours, aSalary, aIsAssignedToApplicant, aIsAllocatedToApplicant, aDescription, aDeadline, aSchedule, this, aTamas);
   }
 
   public boolean addJob(Job aJob)
@@ -490,7 +520,9 @@ public class Course
     return super.toString() + "["+
             "courseCode" + ":" + getCourseCode()+ "," +
             "courseCredit" + ":" + getCourseCredit()+ "," +
-            "numberOfHours" + ":" + getNumberOfHours()+ "]" + System.getProperties().getProperty("line.separator") +
+            "numberOfHours" + ":" + getNumberOfHours()+ "," +
+            "courseBudget" + ":" + getCourseBudget()+ "," +
+            "studentEnrolment" + ":" + getStudentEnrolment()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "tamas = "+(getTamas()!=null?Integer.toHexString(System.identityHashCode(getTamas())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "eceAdmin = "+(getEceAdmin()!=null?Integer.toHexString(System.identityHashCode(getEceAdmin())):"null")
      + outputString;

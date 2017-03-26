@@ -1,9 +1,9 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.25.0-9e8af9e modeling language!*/
+/*This code was generated using the UMPLE 1.24.0-dab6b48 modeling language!*/
 
 package ca.mcgill.ecse321.TAMAS.model;
 
-// line 79 "../../../../../TAMAS.ump"
+// line 80 "../../../../../model.ump"
 public class JobApplication
 {
 
@@ -13,10 +13,6 @@ public class JobApplication
 
   //JobApplication Attributes
   private String experience;
-
-  //JobApplication State Machines
-  public enum Preference { ta, grader, both }
-  private Preference preference;
 
   //JobApplication Associations
   private Applicant applicant;
@@ -39,7 +35,6 @@ public class JobApplication
     {
       throw new RuntimeException("Unable to create jobApplication due to appliedJob");
     }
-    setPreference(Preference.ta);
   }
 
   //------------------------
@@ -57,23 +52,6 @@ public class JobApplication
   public String getExperience()
   {
     return experience;
-  }
-
-  public String getPreferenceFullName()
-  {
-    String answer = preference.toString();
-    return answer;
-  }
-
-  public Preference getPreference()
-  {
-    return preference;
-  }
-
-  public boolean setPreference(Preference aPreference)
-  {
-    preference = aPreference;
-    return true;
   }
 
   public Applicant getApplicant()

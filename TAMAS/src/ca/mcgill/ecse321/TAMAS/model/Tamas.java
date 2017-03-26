@@ -1,10 +1,10 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.25.0-9e8af9e modeling language!*/
+/*This code was generated using the UMPLE 1.24.0-dab6b48 modeling language!*/
 
 package ca.mcgill.ecse321.TAMAS.model;
 import java.util.*;
 
-// line 3 "../../../../../TAMAS.ump"
+// line 3 "../../../../../model.ump"
 public class Tamas
 {
 
@@ -127,9 +127,9 @@ public class Tamas
     return 0;
   }
 
-  public Course addCourse(String aCourseCode, int aCourseCredit, EceAdmin aEceAdmin)
+  public Course addCourse(String aCourseCode, int aCourseCredit, int aNumberOfHours, int aCourseBudget, EceAdmin aEceAdmin)
   {
-    return new Course(aCourseCode, aCourseCredit, this, aEceAdmin);
+    return new Course(aCourseCode, aCourseCredit, aNumberOfHours, aCourseBudget, this, aEceAdmin);
   }
 
   public boolean addCourse(Course aCourse)
@@ -271,9 +271,9 @@ public class Tamas
     return 0;
   }
 
-  public Job addJob(int aNumberOfHours, int aSalary, boolean aIsTaJob, boolean aIsAssignedToApplicant, boolean aIsAllocatedToApplicant, String aDescription, String aDeadline, String aSchedule, Course aCourse)
+  public Job addJob(int aNumberOfHours, int aSalary, boolean aIsAssignedToApplicant, boolean aIsAllocatedToApplicant, String aDescription, String aDeadline, String aSchedule, Course aCourse)
   {
-    return new Job(aNumberOfHours, aSalary, aIsTaJob, aIsAssignedToApplicant, aIsAllocatedToApplicant, aDescription, aDeadline, aSchedule, aCourse, this);
+    return new Job(aNumberOfHours, aSalary, aIsAssignedToApplicant, aIsAllocatedToApplicant, aDescription, aDeadline, aSchedule, aCourse, this);
   }
 
   public boolean addJob(Job aJob)

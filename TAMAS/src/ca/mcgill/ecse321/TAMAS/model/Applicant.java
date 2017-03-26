@@ -1,10 +1,10 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.25.0-9e8af9e modeling language!*/
+/*This code was generated using the UMPLE 1.24.0-dab6b48 modeling language!*/
 
 package ca.mcgill.ecse321.TAMAS.model;
 import java.util.*;
 
-// line 33 "../../../../../TAMAS.ump"
+// line 33 "../../../../../model.ump"
 public class Applicant extends Person
 {
 
@@ -14,7 +14,10 @@ public class Applicant extends Person
 
   //Applicant Attributes
   private String applicantId;
-  private boolean isGrad;
+
+  //Applicant State Machines
+  public enum GradStatus { Undergrad, Grad }
+  private GradStatus gradStatus;
 
   //Applicant Associations
   private List<Job> offeredJob;
@@ -24,13 +27,13 @@ public class Applicant extends Person
   // CONSTRUCTOR
   //------------------------
 
-  public Applicant(String aName, String aUsername, String aPassword, Tamas aTamas, String aApplicantId, boolean aIsGrad)
+  public Applicant(String aName, String aUsername, String aPassword, Tamas aTamas, String aApplicantId)
   {
     super(aName, aUsername, aPassword, aTamas);
     applicantId = aApplicantId;
-    isGrad = aIsGrad;
     offeredJob = new ArrayList<Job>();
     jobApplications = new ArrayList<JobApplication>();
+    setGradStatus(GradStatus.Undergrad);
   }
 
   //------------------------
@@ -45,22 +48,26 @@ public class Applicant extends Person
     return wasSet;
   }
 
-  public boolean setIsGrad(boolean aIsGrad)
-  {
-    boolean wasSet = false;
-    isGrad = aIsGrad;
-    wasSet = true;
-    return wasSet;
-  }
-
   public String getApplicantId()
   {
     return applicantId;
   }
 
-  public boolean getIsGrad()
+  public String getGradStatusFullName()
   {
-    return isGrad;
+    String answer = gradStatus.toString();
+    return answer;
+  }
+
+  public GradStatus getGradStatus()
+  {
+    return gradStatus;
+  }
+
+  public boolean setGradStatus(GradStatus aGradStatus)
+  {
+    gradStatus = aGradStatus;
+    return true;
   }
 
   public Job getOfferedJob(int index)
@@ -366,8 +373,7 @@ public class Applicant extends Person
   {
     String outputString = "";
     return super.toString() + "["+
-            "applicantId" + ":" + getApplicantId()+ "," +
-            "isGrad" + ":" + getIsGrad()+ "]"
+            "applicantId" + ":" + getApplicantId()+ "]"
      + outputString;
   }
 }
