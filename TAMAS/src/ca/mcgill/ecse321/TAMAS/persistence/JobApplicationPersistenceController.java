@@ -17,7 +17,8 @@ public class JobApplicationPersistenceController {
 	public String submitJobApplication(JobApplication jApplication){
 		applicant_cv=jApplication.getExperience();
 		String feedback="";
-		if(jApplication.getApplicant().getIsGrad()==true){
+		String gradStatus = jApplication.getApplicant().getGradStatusFullName(); // Gets GradStatus as a String 
+		if(gradStatus.equalsIgnoreCase("Grad")){
 			applicant_status="GRAD";
 		}else{
 			applicant_status="UGRAD";
