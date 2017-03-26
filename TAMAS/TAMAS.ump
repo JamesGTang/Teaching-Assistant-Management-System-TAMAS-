@@ -34,7 +34,7 @@ class Applicant
 {
  String applicantId;
  isA Person;
- boolean isGrad;
+ GradStatus { Undergrad{} Grad{} }
  0..* applicant -- 0..3 Job offeredJob;
 }
 
@@ -66,7 +66,6 @@ class Job
  const int MAX_HOURS = 180;
  int numberOfHours;
  int salary;
- boolean isTaJob; // else GraderJob
  boolean isAssignedToApplicant;
  boolean isAllocatedToApplicant; // When finalized
  description;
@@ -80,7 +79,6 @@ class Job
 
 class JobApplication {
  String experience;
- preference { ta{} grader{} both{} }
  0..3 -- 1 Applicant applicant;
  0..* -- 1 Job appliedJob;
 }
