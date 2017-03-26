@@ -14,9 +14,9 @@ public class JobApplicationPersistenceController {
     static int job_id;
     static int applicant_id;
     
-	public String submitJobApplication(JobApplication jApplication){
+	public int submitJobApplication(JobApplication jApplication){
 		applicant_cv=jApplication.getExperience();
-		String feedback="";
+		int feedback=1;
 		String gradStatus = jApplication.getApplicant().getGradStatusFullName(); // Gets GradStatus as a String 
 		if(gradStatus.equalsIgnoreCase("Grad")){
 			applicant_status="GRAD";
@@ -31,6 +31,7 @@ public class JobApplicationPersistenceController {
 		applicant_first_name=stringTokenizer.nextToken();
 		applicant_last_name=stringTokenizer.nextToken();
 		// submit information to database
+		// submitToDB( int applicant_id,int job_id,String fname,String lname,String email,String status, String cv)
 		feedback=JobApplicationPersistence.submitToDB(applicant_id, job_id, applicant_first_name, applicant_last_name, applicant_email, applicant_status, applicant_cv);
 		return feedback;
 	}
