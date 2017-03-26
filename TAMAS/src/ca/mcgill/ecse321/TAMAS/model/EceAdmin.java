@@ -4,7 +4,7 @@
 package ca.mcgill.ecse321.TAMAS.model;
 import java.util.*;
 
-// line 57 "../../../../../model.ump"
+// line 59 "../../../../../model.ump"
 public class EceAdmin extends Person
 {
 

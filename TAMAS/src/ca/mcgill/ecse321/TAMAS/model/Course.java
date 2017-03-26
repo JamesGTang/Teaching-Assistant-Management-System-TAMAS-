@@ -2,11 +2,13 @@
 /*This code was generated using the UMPLE 1.24.0-dab6b48 modeling language!*/
 
 package ca.mcgill.ecse321.TAMAS.model;
+import java.io.Serializable;
 import java.util.*;
 import java.sql.Time;
 
-// line 41 "../../../../../model.ump"
-public class Course
+// line 11 "../../../../../TAMASPersistence.ump"
+// line 43 "../../../../../model.ump"
+public class Course implements Serializable
 {
 
   //------------------------
@@ -513,6 +515,14 @@ public class Course
     }
   }
 
+  // line 18 "../../../../../TAMASPersistence.ump"
+   public static  void reinitializeCourse(List<Course> courses){
+    coursesByCourseCode = new HashMap<String, Course>();
+    for (Course course : courses) {
+    	coursesByCourseCode.put(course.getCourseCode(), course);
+    }
+  }
+
 
   public String toString()
   {
@@ -526,5 +536,15 @@ public class Course
             "  " + "tamas = "+(getTamas()!=null?Integer.toHexString(System.identityHashCode(getTamas())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "eceAdmin = "+(getEceAdmin()!=null?Integer.toHexString(System.identityHashCode(getEceAdmin())):"null")
      + outputString;
-  }
+  }  
+  //------------------------
+  // DEVELOPER CODE - PROVIDED AS-IS
+  //------------------------
+  
+  // line 14 ../../../../../TAMASPersistence.ump
+  private static final long serialVersionUID = 2315072607928790501L ;
+// line 15 ../../../../../TAMASPersistence.ump
+  private static Map<String, Course> coursesByCourseCode = new HashMap<String, Course>() ;
+
+  
 }

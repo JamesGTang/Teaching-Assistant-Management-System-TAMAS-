@@ -2,9 +2,11 @@
 /*This code was generated using the UMPLE 1.24.0-dab6b48 modeling language!*/
 
 package ca.mcgill.ecse321.TAMAS.model;
+import java.io.Serializable;
 
-// line 80 "../../../../../model.ump"
-public class JobApplication
+// line 65 "../../../../../TAMASPersistence.ump"
+// line 82 "../../../../../model.ump"
+public class JobApplication implements Serializable
 {
 
   //------------------------
@@ -133,5 +135,13 @@ public class JobApplication
             "  " + "applicant = "+(getApplicant()!=null?Integer.toHexString(System.identityHashCode(getApplicant())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "appliedJob = "+(getAppliedJob()!=null?Integer.toHexString(System.identityHashCode(getAppliedJob())):"null")
      + outputString;
-  }
+  }  
+  //------------------------
+  // DEVELOPER CODE - PROVIDED AS-IS
+  //------------------------
+  
+  // line 68 ../../../../../TAMASPersistence.ump
+  private static final long serialVersionUID = -3900912597282882073L ;
+
+  
 }

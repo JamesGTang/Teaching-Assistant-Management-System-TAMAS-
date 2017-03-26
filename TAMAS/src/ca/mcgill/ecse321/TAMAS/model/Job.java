@@ -2,10 +2,12 @@
 /*This code was generated using the UMPLE 1.24.0-dab6b48 modeling language!*/
 
 package ca.mcgill.ecse321.TAMAS.model;
+import java.io.Serializable;
 import java.util.*;
 
-// line 63 "../../../../../model.ump"
-public class Job
+// line 40 "../../../../../TAMASPersistence.ump"
+// line 65 "../../../../../model.ump"
+public class Job implements Serializable
 {
 
   //------------------------
@@ -659,6 +661,17 @@ public class Job
     }
   }
 
+  // line 47 "../../../../../TAMASPersistence.ump"
+   public static  void reinitializeAutouniqueID(List<Job> jobs){
+    nextId = 0; 
+	    for (Job job : jobs) {
+	      if (job.getJobId() > nextId) {
+	        nextId = job.getJobId();
+	      }
+	    }
+	    nextId++;
+  }
+
 
   public String toString()
   {
@@ -676,5 +689,15 @@ public class Job
             "  " + "tamas = "+(getTamas()!=null?Integer.toHexString(System.identityHashCode(getTamas())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "evaluation = "+(getEvaluation()!=null?Integer.toHexString(System.identityHashCode(getEvaluation())):"null")
      + outputString;
-  }
+  }  
+  //------------------------
+  // DEVELOPER CODE - PROVIDED AS-IS
+  //------------------------
+  
+  // line 43 ../../../../../TAMASPersistence.ump
+  private static final long serialVersionUID = 2045406856025012133L ;
+// line 44 ../../../../../TAMASPersistence.ump
+  private static int nextId ;
+
+  
 }

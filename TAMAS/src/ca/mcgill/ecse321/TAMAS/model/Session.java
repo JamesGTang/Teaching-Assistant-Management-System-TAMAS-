@@ -2,11 +2,13 @@
 /*This code was generated using the UMPLE 1.24.0-dab6b48 modeling language!*/
 
 package ca.mcgill.ecse321.TAMAS.model;
+import java.io.Serializable;
 import java.sql.Time;
 import java.util.*;
 
-// line 23 "../../../../../model.ump"
-public class Session
+// line 71 "../../../../../TAMASPersistence.ump"
+// line 25 "../../../../../model.ump"
+public class Session implements Serializable
 {
 
   //------------------------
@@ -299,5 +301,13 @@ public class Session
             "  " + "endTime" + "=" + (getEndTime() != null ? !getEndTime().equals(this)  ? getEndTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "course = "+(getCourse()!=null?Integer.toHexString(System.identityHashCode(getCourse())):"null")
      + outputString;
-  }
+  }  
+  //------------------------
+  // DEVELOPER CODE - PROVIDED AS-IS
+  //------------------------
+  
+  // line 74 ../../../../../TAMASPersistence.ump
+  private static final long serialVersionUID = -3900912597282882073L ;
+
+  
 }

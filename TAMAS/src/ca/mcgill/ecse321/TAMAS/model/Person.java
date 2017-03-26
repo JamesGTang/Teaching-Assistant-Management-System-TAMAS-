@@ -2,11 +2,24 @@
 /*This code was generated using the UMPLE 1.24.0-dab6b48 modeling language!*/
 
 package ca.mcgill.ecse321.TAMAS.model;
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-// line 9 "../../../../../model.ump"
-public class Person
+// line 26 "../../../../../TAMASPersistence.ump"
+// line 11 "../../../../../model.ump"
+public class Person implements Serializable
 {
-
+  //------------------------
+  // DEVELOPER CODE - PROVIDED AS-IS
+  //------------------------
+  
+  // line 29 ../../../../../TAMASPersistence.ump
+  private static final long serialVersionUID = 8896099581655989380L ;
+  // line 30 ../../../../../TAMASPersistence.ump
+  private static Map<String, Person> PersonsByUsername = new HashMap<String, Person>() ;
+	  
   //------------------------
   // MEMBER VARIABLES
   //------------------------
@@ -109,6 +122,14 @@ public class Person
     placeholderTamas.removePerson(this);
   }
 
+  // line 33 "../../../../../TAMASPersistence.ump"
+   public static  void reinitializeUsername(List<Person> persons){
+    PersonsByUsername = new HashMap<String, Person>();
+    for (Person person : persons) {
+      PersonsByUsername.put(person.getUsername(), person);
+    }
+  }
+
 
   public String toString()
   {
@@ -119,5 +140,8 @@ public class Person
             "password" + ":" + getPassword()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "tamas = "+(getTamas()!=null?Integer.toHexString(System.identityHashCode(getTamas())):"null")
      + outputString;
-  }
+  }  
+
+
+  
 }
