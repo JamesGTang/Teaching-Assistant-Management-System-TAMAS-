@@ -1,5 +1,7 @@
 namespace ca.mcgill.ecse321.TAMAS.model;
 
+use TAMASPersistence.ump;
+
 class Tamas {
   1 <@>- * Course;
   1 <@>- * Person;
