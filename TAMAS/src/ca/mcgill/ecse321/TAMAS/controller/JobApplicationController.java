@@ -19,14 +19,21 @@ public class JobApplicationController {
 		String aApplicantId;
 		String aName;
 		String aPassword;
+		String gradStatus;
 		Boolean aIsGrad;
 		String aUsername;
 		
-	    aApplicantId=Applicant.getApplicantId();
+	    	aApplicantId=Applicant.getApplicantId();
 		aName=Applicant.getName();
 		aPassword=Applicant.getPassword();
 		aUsername=Applicant.getUsername();
-		aIsGrad=Applicant.getIsGrad();
+		
+		gradStatus=Applicant.getGradStatusFullName();
+		if(gradStatus.equalsIgnoreCase("Grad")){
+			aIsGrad=true;
+		}else{
+			aIsGrad=false;
+		}
 		
 		if(aApplicantId==null||aApplicantId.trim().length()==0){
 			error=error+"Applicant Id cannot be empty! ";
