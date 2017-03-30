@@ -4,12 +4,18 @@ TAMAS Teaching Management System
 
 <h3>
 TAMAS to do list
-<h3>
+</h3>
+
 
 <ol>
-<li> Fix android job view posting page </li>
-
-
+For android: 
+<li> Add a JobPostingController class (contruct a jobapplication object from view and perform validation) </li>
+<li> Add a studentcontroller class ( construct a student obejct from registeration information and send to db </li>
+<li> Fix android job view posting page (when clicked the app crashes </li>
+<li> Add a textview to the apply for job page that display job informatiopn </li> 
+<li> Remove link from main page to the "submit job posting page ( it was for testing ) </li>
+For desktop
+<li> 
 </ol>
 
 
