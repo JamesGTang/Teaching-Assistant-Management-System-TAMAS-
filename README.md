@@ -15,7 +15,17 @@ For android:
 <li> Add a textview to the apply for job page that display job informatiopn </li> 
 <li> Remove link from main page to the "submit job posting page ( it was for testing ) </li>
 For desktop
-<li> 
+<li> Implement a simple view ( with three buttons, "Go to instructor login", "ECEadmin login", "Go to student login" )</li>
+<li> Implement view for ECEadmin, should have a 1. option to load class allocation information from a file ( file will be in json format (can directly export from sql), james will write the parser 2. a log in page </li>
+<li> Implement ECEadmin controller, InstructorController, StudentController ( we can combine them into one controller ) </li>
+<li> For every controller we will need a Junit test, use the template under test pacakge </li>
+<li> implement the build.xml </li>
+
+For web
+<li> Login page </li>
+<li> Refactor the code to use model </li>
+<li> Implement PHPunit test </li>
+<li> Input validation code to prevent sql injection </li>
 </ol>
 
 
