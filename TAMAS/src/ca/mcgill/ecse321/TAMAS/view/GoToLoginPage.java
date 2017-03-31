@@ -18,6 +18,9 @@ private JButton EceLog;
 private JLabel Instructor;
 private JLabel Student;
 private JLabel ECE;
+private JLabel LoginLabel;
+private JLabel RegisterLabel;
+private JButton RegisterButton;
 
 
 public GoToLoginPage() {
@@ -27,19 +30,26 @@ public GoToLoginPage() {
 private void initComponents(){
 	
 	getContentPane().setBackground(Color.decode("#C63D0F"));
+	LoginLabel = new JLabel("Have an account?");
 	InstructorLog = new JButton("Instructor Login");
 	StudentLog = new JButton("Applicant Login");
 	EceLog = new JButton("ECE Admin Login");
 	Instructor = new JLabel("If you are an instructor :");
 	Student = new JLabel("If you are an applicant :");
 	ECE = new JLabel("If you are a member of the administration :");
+	RegisterLabel = new JLabel("Dont' have an account? ");
+	RegisterButton = new JButton("Register");
 	
+	LoginLabel.setFont(new Font("Gotham",Font.BOLD, 12));
+	LoginLabel.setForeground(Color.black);
 	Instructor.setFont(new Font("Gotham",Font.BOLD,12));
 	Instructor.setForeground(Color.white);
 	Student.setFont(new Font("Gotham",Font.BOLD,12));
 	Student.setForeground(Color.white);
 	ECE.setFont(new Font("Gotham",Font.BOLD,12));
 	ECE.setForeground(Color.white);
+	RegisterLabel.setFont(new Font("Gotham",Font.BOLD,12));
+	RegisterLabel.setForeground(Color.black);
 	
 	InstructorLog.addActionListener(new java.awt.event.ActionListener() {
 		public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -58,6 +68,13 @@ private void initComponents(){
 			EceLogActionPerformed(evt);
 		}
 		});
+	
+	RegisterButton.addActionListener(new java.awt.event.ActionListener() {
+		public void actionPerformed(java.awt.event.ActionEvent evt) {
+			RegisterActionPerformed(evt);
+		}
+		});
+	
 	
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	setTitle("Choose your login page");
@@ -78,17 +95,23 @@ private void initComponents(){
     layout.setAutoCreateContainerGaps(true);
     
     layout.setHorizontalGroup(layout.createSequentialGroup()
+ 
     		.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+    				.addComponent(LoginLabel)
     				.addComponent(Instructor)
     				.addComponent(Student)
-    				.addComponent(ECE)	)	
+    				.addComponent(ECE)
+    				.addComponent(RegisterLabel))
+    		
     		.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
     				.addComponent(InstructorLog)
     				.addComponent(StudentLog)
-    				.addComponent(EceLog))
+    				.addComponent(EceLog)
+    				.addComponent(RegisterButton))
     		);
     
     layout.setVerticalGroup(layout.createSequentialGroup()
+    		.addComponent(LoginLabel)
     		.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
     				.addComponent(Instructor)
     				.addComponent(InstructorLog))
@@ -97,7 +120,10 @@ private void initComponents(){
     				.addComponent(StudentLog))
     		.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
     				.addComponent(ECE)
-    		.addComponent(EceLog))
+    				.addComponent(EceLog))
+    		.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+    				.addComponent(RegisterLabel)
+    				.addComponent(RegisterButton))
     		);
     
     pack();	
@@ -110,6 +136,8 @@ private void InstructorLogActionPerformed(java.awt.event.ActionEvent evt){}
 private void StudentLogActionPerformed(java.awt.event.ActionEvent evt){}
 
 private void EceLogActionPerformed(java.awt.event.ActionEvent evt){}
+
+private void RegisterActionPerformed(java.awt.event.ActionEvent evt){}
 
 
 
