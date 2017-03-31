@@ -2,14 +2,9 @@
 /*This code was generated using the UMPLE 1.24.0-dab6b48 modeling language!*/
 
 package ca.mcgill.ecse321.TAMAS.model;
-import java.io.Serializable;
 
-/**
- * Should these 3 be here?
- */
-// line 59 "../../../../../TAMASPersistence.ump"
-// line 19 "../../../../../model.ump"
-public class Evaluation implements Serializable
+// line 17 "../../../../../TAMAS.ump"
+public class Evaluation
 {
 
   //------------------------
@@ -111,13 +106,5 @@ public class Evaluation implements Serializable
       existingJob.setEvaluation(null);
     }
   }
-  
-  //------------------------
-  // DEVELOPER CODE - PROVIDED AS-IS
-  //------------------------
-  
-  // line 62 ../../../../../TAMASPersistence.ump
-  private static final long serialVersionUID = 386717977557499839L ;
 
-  
 }

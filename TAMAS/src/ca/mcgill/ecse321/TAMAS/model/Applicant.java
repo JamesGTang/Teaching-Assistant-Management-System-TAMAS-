@@ -4,7 +4,7 @@
 package ca.mcgill.ecse321.TAMAS.model;
 import java.util.*;
 
-// line 35 "../../../../../model.ump"
+// line 33 "../../../../../TAMAS.ump"
 public class Applicant extends Person
 {
 
@@ -16,7 +16,7 @@ public class Applicant extends Person
   private String applicantId;
 
   //Applicant State Machines
-  public enum GradStatus { Undergrad, Grad }
+  public enum GradStatus { Graduate, Undergraduate }
   private GradStatus gradStatus;
 
   //Applicant Associations
@@ -33,7 +33,7 @@ public class Applicant extends Person
     applicantId = aApplicantId;
     offeredJob = new ArrayList<Job>();
     jobApplications = new ArrayList<JobApplication>();
-    setGradStatus(GradStatus.Undergrad);
+    setGradStatus(GradStatus.Graduate);
   }
 
   //------------------------

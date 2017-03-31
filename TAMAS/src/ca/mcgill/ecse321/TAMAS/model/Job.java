@@ -2,12 +2,10 @@
 /*This code was generated using the UMPLE 1.24.0-dab6b48 modeling language!*/
 
 package ca.mcgill.ecse321.TAMAS.model;
-import java.io.Serializable;
 import java.util.*;
 
-// line 40 "../../../../../TAMASPersistence.ump"
-// line 65 "../../../../../model.ump"
-public class Job implements Serializable
+// line 61 "../../../../../TAMAS.ump"
+public class Job
 {
 
   //------------------------
@@ -77,6 +75,39 @@ public class Job implements Serializable
     jobApplications = new ArrayList<JobApplication>();
     setJobState(JobState.IsPosted);
     setJobType(JobType.TaJob);
+  }
+  
+//constructor without salary, deadline (to test persistence)
+  public Job(int aNumberOfHours, boolean aIsTaJob, boolean aIsAssignedToApplicant, boolean aIsAllocatedToApplicant, String aDescription, String aSchedule, Course aCourse, Tamas aTamas)
+  {
+    numberOfHours = aNumberOfHours;
+    salary = 0;
+    isAssignedToApplicant = aIsAssignedToApplicant;
+    isAllocatedToApplicant = aIsAllocatedToApplicant;
+    description = aDescription;
+    deadline = "";
+    schedule = aSchedule;
+    jobId = nextJobId++;
+    boolean didAddCourse = setCourse(aCourse);
+    if (!didAddCourse)
+    {
+      throw new RuntimeException("Unable to create job due to course");
+    }
+    boolean didAddTamas = setTamas(aTamas);
+    if (!didAddTamas)
+    {
+      throw new RuntimeException("Unable to create job due to tamas");
+    }
+    jobSession = new ArrayList<Session>();
+    applicant = new ArrayList<Applicant>();
+    jobApplications = new ArrayList<JobApplication>();
+    setJobState(JobState.IsPosted);
+    if(aIsTaJob){
+    	setJobType(JobType.TaJob);
+    }
+    else{
+    	setJobType(JobType.GraderJob);
+    }
   }
 
   //------------------------
@@ -661,17 +692,6 @@ public class Job implements Serializable
     }
   }
 
-  // line 47 "../../../../../TAMASPersistence.ump"
-   public static  void reinitializeAutouniqueID(List<Job> jobs){
-    nextId = 0; 
-	    for (Job job : jobs) {
-	      if (job.getJobId() > nextId) {
-	        nextId = job.getJobId();
-	      }
-	    }
-	    nextId++;
-  }
-
 
   public String toString()
   {
@@ -689,15 +709,5 @@ public class Job implements Serializable
             "  " + "tamas = "+(getTamas()!=null?Integer.toHexString(System.identityHashCode(getTamas())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "evaluation = "+(getEvaluation()!=null?Integer.toHexString(System.identityHashCode(getEvaluation())):"null")
      + outputString;
-  }  
-  //------------------------
-  // DEVELOPER CODE - PROVIDED AS-IS
-  //------------------------
-  
-  // line 43 ../../../../../TAMASPersistence.ump
-  private static final long serialVersionUID = 2045406856025012133L ;
-// line 44 ../../../../../TAMASPersistence.ump
-  private static int nextId ;
-
-  
+  }
 }

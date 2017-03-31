@@ -4,7 +4,7 @@
 package ca.mcgill.ecse321.TAMAS.model;
 import java.util.*;
 
-// line 59 "../../../../../model.ump"
+// line 55 "../../../../../TAMAS.ump"
 public class EceAdmin extends Person
 {
 
@@ -64,9 +64,9 @@ public class EceAdmin extends Person
     return 0;
   }
 
-  public Course addCourseList(String aCourseCode, int aCourseCredit, int aNumberOfHours, int aCourseBudget, Tamas aTamas)
+  public Course addCourseList(String aCourseCode, int aCourseCredit, Tamas aTamas)
   {
-    return new Course(aCourseCode, aCourseCredit, aNumberOfHours, aCourseBudget, aTamas, this);
+    return new Course(aCourseCode, aCourseCredit, aTamas, this);
   }
 
   public boolean addCourseList(Course aCourseList)

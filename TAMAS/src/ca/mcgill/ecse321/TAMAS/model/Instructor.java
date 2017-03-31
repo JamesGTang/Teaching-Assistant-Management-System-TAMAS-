@@ -4,7 +4,7 @@
 package ca.mcgill.ecse321.TAMAS.model;
 import java.util.*;
 
-// line 53 "../../../../../model.ump"
+// line 49 "../../../../../TAMAS.ump"
 public class Instructor extends Person
 {
 
