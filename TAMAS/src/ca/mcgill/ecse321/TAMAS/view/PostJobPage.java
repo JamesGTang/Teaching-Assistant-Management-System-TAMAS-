@@ -22,6 +22,7 @@ import javax.swing.WindowConstants;
 
 import ca.mcgill.ecse321.TAMAS.controller.InstructorController;
 import ca.mcgill.ecse321.TAMAS.controller.InvalidInputException;
+import ca.mcgill.ecse321.TAMAS.model.Instructor;
 import ca.mcgill.ecse321.TAMAS.persistence.JobPostingPersistence;
 
 
@@ -72,7 +73,7 @@ public class PostJobPage extends javax.swing.JFrame {
 	private JComboBox<Integer> endTimeWed;
 	private JComboBox<Integer> endTimeThu;
 	private JComboBox<Integer> endTimeFri;
-	
+
 	// combo boxes for courses
 	String[] courses;
 	private JComboBox<String> courseList;
@@ -92,19 +93,23 @@ public class PostJobPage extends javax.swing.JFrame {
 	// error
 	private String error = null;
 	
-	public PostJobPage() {
-		initComponents();
+	// Controller
+	InstructorController ic = new InstructorController();
+	
+	public PostJobPage(Instructor instructor) {
+		initComponents(instructor);
 		refreshData();
 	}
 	
-	private void initComponents(){
+	private void initComponents(Instructor instructor){
 		// elements for error message
 		errorMessage = new JLabel();
 		errorMessage.setForeground(Color.RED);
 				
 		// labels
 		instructorLabel = new JLabel("Instructor: ");
-		instructorName = new JLabel("DANIEL VARRO");
+		String name = instructor.getName();
+		instructorName = new JLabel(name);
 		courseLabel = new JLabel("Course:");
 		jobTypeLabel = new JLabel("Job type:");
 		hoursLabel = new JLabel("Number of Hours:");
@@ -158,10 +163,11 @@ public class PostJobPage extends javax.swing.JFrame {
 		endTimeFri = new JComboBox<Integer>(times);
 		
 		// combo boxes for courses
-		courses = new String[] {"ECSE 222", "ECSE 223", "ECSE 321"};
+		courses = ic.getCoursesByIntructor(instructor);
 		courseList = new JComboBox<String>(courses);
 		
 		//combo box for job type
+		// instructor will always have the possibility of requesting either a TA or Grader
 		jobTypeList = new String[] {"TA", "Grader"};
 		jobType = new JComboBox<String>(jobTypeList);
 		
@@ -356,8 +362,7 @@ public class PostJobPage extends javax.swing.JFrame {
 		int times[] = {mst,met, tst,tet, wst,wet, thst,thet, fst,fet};
 		
 		// Send to controller, then call submitJobPostingtoDB from there
-		InstructorController ic = new InstructorController();
-	
+		ic.postJob(instructor_name, course, job_type, hour, description, daysofweek, times);
 		
 		// update visuals
 		refreshData();
