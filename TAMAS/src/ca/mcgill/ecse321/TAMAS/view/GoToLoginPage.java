@@ -59,19 +59,19 @@ private void initComponents(){
 	
 	StudentLog.addActionListener(new java.awt.event.ActionListener() {
 		public void actionPerformed(java.awt.event.ActionEvent evt) {
-			StudentLogActionPerformed(evt);
+			//StudentLogActionPerformed(evt);
 		}
 		});
 	
 	EceLog.addActionListener(new java.awt.event.ActionListener() {
 		public void actionPerformed(java.awt.event.ActionEvent evt) {
-			EceLogActionPerformed(evt);
+			//EceLogActionPerformed(evt);
 		}
 		});
 	
 	RegisterButton.addActionListener(new java.awt.event.ActionListener() {
 		public void actionPerformed(java.awt.event.ActionEvent evt) {
-			RegisterActionPerformed(evt);
+			//RegisterActionPerformed(evt);
 		}
 		});
 	
@@ -131,13 +131,37 @@ private void initComponents(){
 
 
 
-private void InstructorLogActionPerformed(java.awt.event.ActionEvent evt){}
+private void InstructorLogActionPerformed(java.awt.event.ActionEvent evt){
+	LoginPage page = new LoginPage();
+   	page.setVisible(true);
+   	page.setLocation(this.getX()+20, this.getY()+20);
+	page.setSize(700,700);
+	//refreshData();
+}
 
-private void StudentLogActionPerformed(java.awt.event.ActionEvent evt){}
+private void StudentLogActionPerformed(java.awt.event.ActionEvent evt){
+	LoginPage page = new LoginPage();
+   	page.setVisible(true);
+   	page.setLocation(this.getX()+20, this.getY()+20);
+	page.setSize(700,700);
+	//refreshData();
+}
 
-private void EceLogActionPerformed(java.awt.event.ActionEvent evt){}
+private void EceLogActionPerformed(java.awt.event.ActionEvent evt){
+	LoginPage page = new LoginPage();
+   	page.setVisible(true);
+   	page.setLocation(this.getX()+20, this.getY()+20);
+	page.setSize(700,700);
+	//refreshData();
+}
 
-private void RegisterActionPerformed(java.awt.event.ActionEvent evt){}
+private void RegisterActionPerformed(java.awt.event.ActionEvent evt){
+	RegisterPage page = new RegisterPage();
+	page.setVisible(true);
+	page.setLocation(this.getX()+20, this.getY()+20);
+page.setSize(700,700);
+//refreshData();
+}
 
 
 
