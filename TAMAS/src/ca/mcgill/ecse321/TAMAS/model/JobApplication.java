@@ -2,9 +2,11 @@
 /*This code was generated using the UMPLE 1.24.0-dab6b48 modeling language!*/
 
 package ca.mcgill.ecse321.TAMAS.model;
+import java.io.Serializable;
 
-// line 78 "../../../../../TAMAS.ump"
-public class JobApplication
+// line 65 "../../../../../TAMASPersistence.ump"
+// line 82 "../../../../../model.ump"
+public class JobApplication implements Serializable
 {
 
   //------------------------
@@ -13,10 +15,6 @@ public class JobApplication
 
   //JobApplication Attributes
   private String experience;
-
-  //JobApplication State Machines
-  public enum Preference { ta, grader, both }
-  private Preference preference;
 
   //JobApplication Associations
   private Applicant applicant;
@@ -39,7 +37,6 @@ public class JobApplication
     {
       throw new RuntimeException("Unable to create jobApplication due to appliedJob");
     }
-    setPreference(Preference.ta);
   }
 
   //------------------------
@@ -57,23 +54,6 @@ public class JobApplication
   public String getExperience()
   {
     return experience;
-  }
-
-  public String getPreferenceFullName()
-  {
-    String answer = preference.toString();
-    return answer;
-  }
-
-  public Preference getPreference()
-  {
-    return preference;
-  }
-
-  public boolean setPreference(Preference aPreference)
-  {
-    preference = aPreference;
-    return true;
   }
 
   public Applicant getApplicant()
@@ -155,5 +135,13 @@ public class JobApplication
             "  " + "applicant = "+(getApplicant()!=null?Integer.toHexString(System.identityHashCode(getApplicant())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "appliedJob = "+(getAppliedJob()!=null?Integer.toHexString(System.identityHashCode(getAppliedJob())):"null")
      + outputString;
-  }
+  }  
+  //------------------------
+  // DEVELOPER CODE - PROVIDED AS-IS
+  //------------------------
+  
+  // line 68 ../../../../../TAMASPersistence.ump
+  private static final long serialVersionUID = -3900912597282882073L ;
+
+  
 }

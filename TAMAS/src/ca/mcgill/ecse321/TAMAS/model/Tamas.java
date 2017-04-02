@@ -2,10 +2,15 @@
 /*This code was generated using the UMPLE 1.24.0-dab6b48 modeling language!*/
 
 package ca.mcgill.ecse321.TAMAS.model;
+import java.io.Serializable;
 import java.util.*;
 
-// line 3 "../../../../../TAMAS.ump"
-public class Tamas
+/**
+ * Based on BTMSPersistence.ump
+ */
+// line 5 "../../../../../TAMASPersistence.ump"
+// line 5 "../../../../../model.ump"
+public class Tamas implements Serializable
 {
 
   //------------------------
@@ -127,9 +132,9 @@ public class Tamas
     return 0;
   }
 
-  public Course addCourse(String aCourseCode, int aCourseCredit, EceAdmin aEceAdmin)
+  public Course addCourse(String aCourseCode, int aCourseCredit, int aNumberOfHours, int aCourseBudget, EceAdmin aEceAdmin)
   {
-    return new Course(aCourseCode, aCourseCredit, this, aEceAdmin);
+    return new Course(aCourseCode, aCourseCredit, aNumberOfHours, aCourseBudget, this, aEceAdmin);
   }
 
   public boolean addCourse(Course aCourse)
@@ -362,5 +367,13 @@ public class Tamas
     }
     
   }
+  
+  //------------------------
+  // DEVELOPER CODE - PROVIDED AS-IS
+  //------------------------
+  
+  // line 8 ../../../../../TAMASPersistence.ump
+  private static final long serialVersionUID = -2683593616927798071L ;
 
+  
 }

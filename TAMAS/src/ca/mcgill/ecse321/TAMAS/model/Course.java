@@ -2,11 +2,13 @@
 /*This code was generated using the UMPLE 1.24.0-dab6b48 modeling language!*/
 
 package ca.mcgill.ecse321.TAMAS.model;
+import java.io.Serializable;
 import java.util.*;
 import java.sql.Time;
 
-// line 41 "../../../../../TAMAS.ump"
-public class Course
+// line 11 "../../../../../TAMASPersistence.ump"
+// line 43 "../../../../../model.ump"
+public class Course implements Serializable
 {
 
   //------------------------
@@ -17,6 +19,8 @@ public class Course
   private String courseCode;
   private int courseCredit;
   private int numberOfHours;
+  private int courseBudget;
+  private int studentEnrolment;
 
   //Course Associations
   private List<Session> specificSession;
@@ -29,10 +33,12 @@ public class Course
   // CONSTRUCTOR
   //------------------------
 
-  public Course(String aCourseCode, int aCourseCredit, Tamas aTamas, EceAdmin aEceAdmin)
+  public Course(String aCourseCode, int aCourseCredit, int aNumberOfHours, int aCourseBudget, Tamas aTamas, EceAdmin aEceAdmin)
   {
     courseCode = aCourseCode;
     courseCredit = aCourseCredit;
+    numberOfHours = aNumberOfHours;
+    courseBudget = aCourseBudget;
     specificSession = new ArrayList<Session>();
     boolean didAddTamas = setTamas(aTamas);
     if (!didAddTamas)
@@ -76,6 +82,22 @@ public class Course
     return wasSet;
   }
 
+  public boolean setCourseBudget(int aCourseBudget)
+  {
+    boolean wasSet = false;
+    courseBudget = aCourseBudget;
+    wasSet = true;
+    return wasSet;
+  }
+
+  public boolean setStudentEnrolment(int aStudentEnrolment)
+  {
+    boolean wasSet = false;
+    studentEnrolment = aStudentEnrolment;
+    wasSet = true;
+    return wasSet;
+  }
+
   public String getCourseCode()
   {
     return courseCode;
@@ -89,6 +111,16 @@ public class Course
   public int getNumberOfHours()
   {
     return numberOfHours;
+  }
+
+  public int getCourseBudget()
+  {
+    return courseBudget;
+  }
+
+  public int getStudentEnrolment()
+  {
+    return studentEnrolment;
   }
 
   public Session getSpecificSession(int index)
@@ -483,6 +515,14 @@ public class Course
     }
   }
 
+  // line 18 "../../../../../TAMASPersistence.ump"
+   public static  void reinitializeCourse(List<Course> courses){
+    coursesByCourseCode = new HashMap<String, Course>();
+    for (Course course : courses) {
+    	coursesByCourseCode.put(course.getCourseCode(), course);
+    }
+  }
+
 
   public String toString()
   {
@@ -490,9 +530,21 @@ public class Course
     return super.toString() + "["+
             "courseCode" + ":" + getCourseCode()+ "," +
             "courseCredit" + ":" + getCourseCredit()+ "," +
-            "numberOfHours" + ":" + getNumberOfHours()+ "]" + System.getProperties().getProperty("line.separator") +
+            "numberOfHours" + ":" + getNumberOfHours()+ "," +
+            "courseBudget" + ":" + getCourseBudget()+ "," +
+            "studentEnrolment" + ":" + getStudentEnrolment()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "tamas = "+(getTamas()!=null?Integer.toHexString(System.identityHashCode(getTamas())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "eceAdmin = "+(getEceAdmin()!=null?Integer.toHexString(System.identityHashCode(getEceAdmin())):"null")
      + outputString;
-  }
+  }  
+  //------------------------
+  // DEVELOPER CODE - PROVIDED AS-IS
+  //------------------------
+  
+  // line 14 ../../../../../TAMASPersistence.ump
+  private static final long serialVersionUID = 2315072607928790501L ;
+// line 15 ../../../../../TAMASPersistence.ump
+  private static Map<String, Course> coursesByCourseCode = new HashMap<String, Course>() ;
+
+  
 }
