@@ -1,45 +1,83 @@
 package ca.mcgill.ecse321.TAMAS.application;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
 
 import javax.swing.JFrame;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
+import ca.mcgill.ecse321.TAMAS.model.Course;
+import ca.mcgill.ecse321.TAMAS.model.Instructor;
+import ca.mcgill.ecse321.TAMAS.model.Job;
 import ca.mcgill.ecse321.TAMAS.model.Person;
 import ca.mcgill.ecse321.TAMAS.model.Tamas;
-import ca.mcgill.ecse321.TAMAS.model.Course;
-import ca.mcgill.ecse321.TAMAS.model.Job;
-import ca.mcgill.ecse321.TAMAS.view.*;
-import java.io.*;
+import ca.mcgill.ecse321.TAMAS.persistence.PersistenceObjectStream;
+import ca.mcgill.ecse321.TAMAS.view.PostJobPage;
+
 
 public class TamasApplication {
 	
 	private static Tamas tamas;
 	private static String filename = "data.tamas";
-	
+
 	/**
 	 * @param args
 	 */
-	
 	public static void main(String[] args) {
 		//PostJobPage page = new PostJobPage();
+
+		/*****/
+		// Make UI look like a native application
+	    try {
+            // Set System L&F
+	        UIManager.setLookAndFeel(
+	            UIManager.getSystemLookAndFeelClassName());
+	    } 
+	    catch (Exception e) { /* handle exception */ }
+	
+		/*****/
 		
-		/* ToDo: Remove graphics and set size to 300 600*/
-		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice(); 
-		int width = gd.getDisplayMode().getWidth();
-		
-		System.out.println("The width is "+width);
-		int height=gd.getDisplayMode().getHeight();
-		System.out.println("The height is "+height);
 		
 		java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-            	LoginPage page = new LoginPage();
-               	page.setVisible(true);
-               	((JFrame) page).setSize(height*9/16,height);
+                // Uncomment the page you want to see
+            	
+//            	LoginPage page = new LoginPage();
+            	
+            	// Temporary hack: 
+            	Tamas aTamas = new Tamas();
+            	Instructor instructor = new Instructor
+            			("Gunter Mussbacher", "gmussbacher@mcgill.ca", "gmussbacher123", aTamas);
+            	aTamas.addPerson(instructor);
+            	PostJobPage page = new PostJobPage(instructor);
+            	
+//            	JobPostDisplayPage page = new JobPostDisplayPage();
+
+//            	JobApplicationPage page = new JobApplicationPage();
+
+            	page.setVisible(true);
+            	// setSize(length, width)
+            	((JFrame) page).setSize(800,800);
             }
         });
+		
+		/* java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                // Uncomment the page you want to see
+//            	LoginPage page = new LoginPage();
+            	
+//            	PostJobPage page = new PostJobPage();
+            	
+//            	JobPostDisplayPage page = new JobPostDisplayPage();
+
+            	JobApplicationPage page = new JobApplicationPage();
+
+            	page.setVisible(true);
+            	// setSize(length, width)
+            	((JFrame) page).setSize(1200,1200);
+            }
+        }); */
 
 	}
+
 	public static Tamas getTamas() {
 		if (tamas == null) {
 			// load model
@@ -49,16 +87,20 @@ public class TamasApplication {
 	}
 
 	public static void save() {
-		
+		PersistenceObjectStream.serialize(tamas);
 	}
 
 	public static Tamas load() {
-		
+		PersistenceObjectStream.setFilename(filename);
+		tamas = (Tamas) PersistenceObjectStream.deserialize();
 		// model cannot be loaded - create empty Tamas
 		if (tamas == null) {
 			tamas = new Tamas();
 		} else {
-			//do something
+			// Based on methods in TAMASPersistence.ump
+			Job.reinitializeAutouniqueID(tamas.getJobs());
+			Course.reinitializeCourse(tamas.getCourses());
+			Person.reinitializeUsername(tamas.getPersons());
 		}
 		return tamas;
 	}
