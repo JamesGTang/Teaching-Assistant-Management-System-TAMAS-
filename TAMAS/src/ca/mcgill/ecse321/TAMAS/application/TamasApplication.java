@@ -4,12 +4,15 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import com.sun.org.apache.bcel.internal.generic.NEW;
+
 import ca.mcgill.ecse321.TAMAS.model.Course;
+import ca.mcgill.ecse321.TAMAS.model.EceAdmin;
 import ca.mcgill.ecse321.TAMAS.model.Instructor;
 import ca.mcgill.ecse321.TAMAS.model.Job;
 import ca.mcgill.ecse321.TAMAS.model.Person;
 import ca.mcgill.ecse321.TAMAS.model.Tamas;
-import ca.mcgill.ecse321.TAMAS.persistence.PersistenceObjectStream;
+import ca.mcgill.ecse321.TAMAS.view.ECEAdminPage;
 import ca.mcgill.ecse321.TAMAS.view.PostJobPage;
 
 
@@ -47,15 +50,18 @@ public class TamasApplication {
             	Instructor instructor = new Instructor
             			("Gunter Mussbacher", "gmussbacher@mcgill.ca", "gmussbacher123", aTamas);
             	aTamas.addPerson(instructor);
-            	PostJobPage page = new PostJobPage(instructor);
+            	
+            	// PostJobPage page = new PostJobPage(instructor);
             	
 //            	JobPostDisplayPage page = new JobPostDisplayPage();
 
 //            	JobApplicationPage page = new JobApplicationPage();
-
+            	
+            	ECEAdminPage page=new ECEAdminPage(); 
+            	
             	page.setVisible(true);
             	// setSize(length, width)
-            	((JFrame) page).setSize(800,800);
+            	((JFrame) page).setSize(1000,800);
             }
         });
 		
@@ -87,12 +93,12 @@ public class TamasApplication {
 	}
 
 	public static void save() {
-		PersistenceObjectStream.serialize(tamas);
+		
 	}
 
 	public static Tamas load() {
-		PersistenceObjectStream.setFilename(filename);
-		tamas = (Tamas) PersistenceObjectStream.deserialize();
+		
+		
 		// model cannot be loaded - create empty Tamas
 		if (tamas == null) {
 			tamas = new Tamas();
