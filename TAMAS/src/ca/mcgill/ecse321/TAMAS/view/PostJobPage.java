@@ -122,7 +122,7 @@ public class PostJobPage extends javax.swing.JFrame {
 		
 		//number of hours spinner
 		SpinnerModel model =
-		        new SpinnerNumberModel(0,    // Initial value
+		        new SpinnerNumberModel(45,    // Initial value
 		                               0,    // Minimum cannot be less than zero
 		                               1000, /* Overly generous maximum value 
 		                               	      * Exact permitted value will be set in the controller */
@@ -194,13 +194,13 @@ public class PostJobPage extends javax.swing.JFrame {
 	    
 	   layout.setHorizontalGroup(layout.createSequentialGroup()
 	            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+	            		.addComponent(errorMessage)
 	            		.addComponent(courseLabel)
 	            		.addComponent(jobTypeLabel)
 	            		.addComponent(hoursLabel)
 	            		.addComponent(descriptionLabel)
 	            		.addComponent(blank)
-	            		.addComponent(scheduleLabel)
-	            		.addComponent(errorMessage))
+	            		.addComponent(scheduleLabel))
 	            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 	            		.addComponent(courseList)
 	            		.addComponent(jobType)
@@ -250,6 +250,9 @@ public class PostJobPage extends javax.swing.JFrame {
 	    		.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 	    				.addComponent(instructorLabel)
 	    				.addComponent(instructorName)
+	    				)
+	    		.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+	    				.addComponent(errorMessage)
 	    				)
 	    		.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 	    				.addComponent(courseLabel)
@@ -304,7 +307,6 @@ public class PostJobPage extends javax.swing.JFrame {
 	    						)
 	    				)
 	    		.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-	    				.addComponent(errorMessage)
 	    				.addComponent(submit)
 	    				)
 	    		);
@@ -362,7 +364,11 @@ public class PostJobPage extends javax.swing.JFrame {
 		int times[] = {mst,met, tst,tet, wst,wet, thst,thet, fst,fet};
 		
 		// Send to controller, then call submitJobPostingtoDB from there
-		ic.postJob(instructor_name, course, job_type, hour, description, daysofweek, times);
+		try {
+			ic.postJob(instructor_name, course, job_type, hour, description, daysofweek, times);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
 		
 		// update visuals
 		refreshData();
