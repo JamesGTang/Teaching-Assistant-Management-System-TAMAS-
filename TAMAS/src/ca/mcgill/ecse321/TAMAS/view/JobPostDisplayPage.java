@@ -1,9 +1,15 @@
 package ca.mcgill.ecse321.TAMAS.view;
 
+import java.awt.Insets;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
 
 //import java.awt.EventQueue;
 
@@ -16,16 +22,32 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
+
+import ca.mcgill.ecse321.TAMAS.controller.ApplicantController;
+import ca.mcgill.ecse321.TAMAS.model.Applicant;
+import ca.mcgill.ecse321.TAMAS.model.Job;
+import ca.mcgill.ecse321.TAMAS.model.Tamas;
+import ca.mcgill.ecse321.TAMAS.persistence.JobPostingPersistence;
 
 //import ca.mcgill.ecse223.tileo.view.AddConnectionView;
 
 public class JobPostDisplayPage extends JFrame {
+	
+	ApplicantController ac = new ApplicantController();
 
+	Applicant applicant;
+	
 	// labels
+	private JLabel ApplicantLabel;
 	private JLabel AvailableCourses; 
 	private JLabel AvailableJobs;
 	private JLabel Description;
+	
+	//blank line
+    private JLabel blank;
 	
 	// combobox for list of courses
 	private JComboBox coursesComboBox;
@@ -36,26 +58,29 @@ public class JobPostDisplayPage extends JFrame {
 	// array of courses
 	private String[] courseList;
 	
-	// arrays of jobs
-	private String[] jobList1;
-	private String[] jobList2;
+	// hashmap with key CourseCode and value list of Jobs
+	private HashMap<String, ArrayList<Job>> courseAndJobs = new HashMap<String, ArrayList<Job>>();
 	
-	// arrays for desriptions of jobs
-	private String[] descriptions1;
-	private String[] descriptions2;
+	String selectedCourseCode;//selection of courseCode from coursesCombobox
+	ArrayList<Job> selectedCourseJobs;//a list to store the Jobs associated with the selectedCourseCode
+	String[] jobSummaries;//array to store the job summaries for the selected course (i.e. the words you see in job combobox)
 	
-	// scroll pane for job 
-	private JLabel JobDescriptionLabel;
+	HashMap<String, Job> jobAndSummary;//hashmap with a job summary as key and Job as the value
+	String selectedSummary;//the job summary you have selected in jobsCombobox
+	Job selectedJob;//the Job associated with the job summary you have selected in jobsCombobox
+	
+	// scroll pane for job description
+	String description;
+	private JTextArea JobDescriptionText;
 	private JScrollPane JobDescriptionScroll;
 	
 	// button to go to application page
 	private JButton apply;
 	
-	//boolean to see which course is selected
-	boolean job1Selected = true;
-	
-	
 	public JobPostDisplayPage() {
+		Tamas tamas = new Tamas();
+		applicant = new Applicant("Bob Bash", "bobbash123", "password", tamas, "15423");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		initComponents(); 
 		refreshData();
 	}
@@ -67,25 +92,19 @@ public class JobPostDisplayPage extends JFrame {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
 		// labels
-		AvailableCourses = new JLabel("Available Courses:");
-		AvailableJobs = new JLabel("Available Positions:");
-		Description = new JLabel("Description:");
+		ApplicantLabel = new JLabel("Applicant: " + applicant.getName().toUpperCase());
+		AvailableCourses = new JLabel("Available Courses:", SwingConstants.RIGHT);
+		AvailableJobs = new JLabel("Available Positions:", SwingConstants.RIGHT);
+		Description = new JLabel("Description:", SwingConstants.RIGHT);
+		blank = new JLabel(" ");
 		
-		// array of courses
-		courseList = new String[] {"ECSE 223", "ECSE 321"};
-		
-		//array of jobs
-		jobList1 = new String[] {"ECSE 223 TA Mondays 2-4", "ECSE 223 Grader Wednesdays 8-12", "ECSE 223 TA Fridays 9-11"};
-		jobList2 = new String[] {"ECSE 321 TA Tuesdays 1-3", "ECSE 321 TA Thursdays 1-3", "ECSE 321 Grader Mondays 8-10"};
-				
-		//arrays of descriptions
-		descriptions1 = new String[] {"<html>Teaching Assistant for ECSE 223: Model-Based Programming<br><br>Hours: Mondays 2-4<br><br>Overview<br><br>Electrical Engineering : Integration of modelling with programming; abstraction in software engineering;<br>structural modelling; state-based modelling; modelling of object-oriented systems, code generation; natural<br>language constraints in modelling notations; architectural and design patterns; integrated development<br>environments; programming tools (debugging, continuous build/integration, version control and code<br>repositories, diff, defect and issue tracking, refactoring); code review processes.</html>",
-										"<html>Grader for ECSE 223: Model-Based Programming<br><br>Hours: Wednesdays 8-12<br><br>Overview<br><br>Electrical Engineering : Integration of modelling with programming; abstraction in software engineering;<br>structural modelling; state-based modelling; modelling of object-oriented systems, code generation; natural<br>language constraints in modelling notations; architectural and design patterns; integrated development<br>environments; programming tools (debugging, continuous build/integration, version control and code<br>repositories, diff, defect and issue tracking, refactoring); code review processes.</html>",
-										"<html>Teaching Assistant for ECSE 223: Model-Based Programming<br><br>Hours: Fridays 9-11<br><br>Overview<br><br>Electrical Engineering : Integration of modelling with programming; abstraction in software engineering;<br>structural modelling; state-based modelling; modelling of object-oriented systems, code generation; natural<br>language constraints in modelling notations; architectural and design patterns; integrated development<br>environments; programming tools (debugging, continuous build/integration, version control and code<br>repositories, diff, defect and issue tracking, refactoring); code review processes.</html>"};
-		
-		descriptions2 = new String[] {"<html>Teaching Assistant for ECSE 321: Introduction to Software Engineering<br><br>Hours: Tuesdays 1-3<br><br>Overview<br><br>Electrical Engineering : Design, development and testing of software systems.<br>Software life cycle: requirements analysis, software architecture and design,<br>implementation, integration, test planning, and maintenance. The course<br>involves a group project.</html>",
-				"<html>Teaching Assistant for ECSE 321: Introduction to Software Engineering<br><br>Hours: Thursdays 1-3<br><br>Overview<br><br>Electrical Engineering : Design, development and testing of software systems.<br>Software life cycle: requirements analysis, software architecture and design,<br>implementation, integration, test planning, and maintenance. The course<br>involves a group project.</html>",
-				"<html>Grader for ECSE 321: Introduction to Software Engineering<br><br>Hours: Mondays 8-10<br><br>Overview<br><br>Electrical Engineering : Design, development and testing of software systems.<br>Software life cycle: requirements analysis, software architecture and design,<br>implementation, integration, test planning, and maintenance. The course<br>involves a group project.</html>"};
+		// initialize array for courses
+		// fill up hashmap containing key courseCode and object list of jobs
+		courseList = new String[] {"ECSE222", "ECSE321"};//get courses from persistence (eventually)
+		for(String courseCode : courseList){
+			ArrayList<Job> courseJobs = ac.getJobsByCourse(courseCode);
+			courseAndJobs.put(courseCode, courseJobs);
+		}
 		
 		// combobox for list of courses
 		coursesComboBox = new JComboBox<String>(courseList);
@@ -95,19 +114,39 @@ public class JobPostDisplayPage extends JFrame {
 			}
 			});
 		
-		// list of jobs component
-		jobsComboBox = new JComboBox<String>(jobList1);
+		
+
+		//CODE THAT MUST BE REFRESHED EVERYTIME A SELECTION IS MADE IN COMBOBOX
+		
+		selectedCourseCode = (String)coursesComboBox.getSelectedItem();
+		selectedCourseJobs = courseAndJobs.get(selectedCourseCode);
+		jobSummaries = new String[selectedCourseJobs.size()];
+		jobAndSummary = new HashMap<String, Job>();
+		for(int i=0; i<selectedCourseJobs.size(); i++){
+			jobSummaries[i] = ac.getJobSummaryByJob(selectedCourseJobs.get(i));
+			jobAndSummary.put(jobSummaries[i], selectedCourseJobs.get(i));
+		}
+		
+		jobsComboBox = new JComboBox<String>(jobSummaries);
 		jobsComboBox.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jobSelectedActionPerformed(evt);
 			}
 			});
 		
+		// scroll pane for description of the selected job
+		selectedSummary = (String)jobsComboBox.getSelectedItem();
+		selectedJob = jobAndSummary.get(selectedSummary);
+		description = selectedJob.getDescription();
+		JobDescriptionText = new JTextArea(description);
+		JobDescriptionText.setMargin( new Insets(10,10,10,10) );
+		JobDescriptionText.setWrapStyleWord(true);
+		JobDescriptionText.setLineWrap(true);
+		JobDescriptionText.setEditable(false);
+		JobDescriptionScroll = new JScrollPane (JobDescriptionText, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		
-		// scroll pane for job 
-		JobDescriptionLabel = new JLabel(descriptions1[0]);
-		JobDescriptionLabel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
-		JobDescriptionScroll = new JScrollPane (JobDescriptionLabel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		//END OF CODE THAT MUST BE REFRESHED EVERYTIME A SELECTION IS MADE IN COMBOBOX
+		
 		
 		// button to go to application page
 		apply = new JButton("Apply");
@@ -134,11 +173,13 @@ public class JobPostDisplayPage extends JFrame {
 	    layout.setAutoCreateContainerGaps(true);
 		
 	    layout.setHorizontalGroup(layout.createSequentialGroup()
-	    		.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+	    		.addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
 	    				.addComponent(AvailableCourses)
 	    				.addComponent(AvailableJobs)
 	    				.addComponent(Description))
-	    		.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+	    		.addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+	    				.addComponent(ApplicantLabel)
+	    				.addComponent(blank)
 	    				.addComponent(coursesComboBox)
 	    				.addComponent(jobsComboBox)
 	    				.addComponent(JobDescriptionScroll)
@@ -146,6 +187,8 @@ public class JobPostDisplayPage extends JFrame {
 	    		);
 	    
 	    layout.setVerticalGroup(layout.createSequentialGroup()
+	    		.addComponent(ApplicantLabel)
+	    		.addComponent(blank)
 	    		.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 	    				.addComponent(AvailableCourses)
 	    				.addComponent(coursesComboBox))
@@ -155,10 +198,8 @@ public class JobPostDisplayPage extends JFrame {
 	    		.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 	    					.addComponent(Description)
 	    					.addComponent(JobDescriptionScroll))
-	    		.addComponent(apply)
-	    				
-	    						
-	    			
+	    		.addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+	    					.addComponent(apply))	
 	    		);
 	    
 	  
@@ -177,37 +218,56 @@ public class JobPostDisplayPage extends JFrame {
 		//pack();
 	}
 	
+	//the method that is called when you select an item in coursesComboBox [INCOMPLETE]
 	private void courseSelectedActionPerformed(java.awt.event.ActionEvent evt){
-		String item = (String)coursesComboBox.getSelectedItem();
-		System.out.println(item);
-		if(item.equals("ECSE 321")){
-			jobsComboBox.removeAllItems();
-			for(int i=0;i<jobList2.length;i++){
-				jobsComboBox.addItem(jobList2[i]);
-			}
+		selectedCourseCode = (String)coursesComboBox.getSelectedItem();
+		selectedCourseJobs = courseAndJobs.get(selectedCourseCode);
+		jobSummaries = new String[selectedCourseJobs.size()];
+		jobAndSummary = new HashMap<String, Job>();
+		for(int i=0; i<selectedCourseJobs.size(); i++){
+			jobSummaries[i] = ac.getJobSummaryByJob(selectedCourseJobs.get(i));
+			jobAndSummary.put(jobSummaries[i], selectedCourseJobs.get(i));
 		}
-		else{
-			jobsComboBox.removeAllItems();
-			for(int i=0;i<jobList1.length;i++){
-				jobsComboBox.addItem(jobList1[i]);
-			}
-		}
+		
+		DefaultComboBoxModel model = new DefaultComboBoxModel(jobSummaries);
+		jobsComboBox.setModel( model );
+
+		selectedSummary = (String)jobsComboBox.getSelectedItem();
+		selectedJob = jobAndSummary.get(selectedSummary);
+		description = selectedJob.getDescription();
+					
+		JobDescriptionText.setText(description);
+		JobDescriptionScroll.removeAll();
+		JobDescriptionScroll.add(JobDescriptionText);
 		refreshData();
 	}
 	
+	//the method that is called when you select an item in jobsComboBox [INCOMPLETE]
 	private void jobSelectedActionPerformed(java.awt.event.ActionEvent evt){
 		int jobIndex = jobsComboBox.getSelectedIndex();
-		if(jobIndex!=-1){
-			if(coursesComboBox.getSelectedIndex()==0)
-				JobDescriptionLabel.setText(descriptions1[jobIndex]);
-			else
-				JobDescriptionLabel.setText(descriptions2[jobIndex]);
+		if(jobIndex != -1){//because jobIndex is -1 if you select a course in coursesComboBox (not sure why)
+			selectedCourseCode = (String)coursesComboBox.getSelectedItem();
+			selectedCourseJobs = courseAndJobs.get(selectedCourseCode);
+
+			// scroll pane for description of the selected job
+			selectedSummary = (String)jobsComboBox.getSelectedItem();
+			selectedJob = jobAndSummary.get(selectedSummary);
+			description = selectedJob.getDescription();
+			
+			JobDescriptionText.setText(description);
+			JobDescriptionScroll.removeAll();
+			JobDescriptionScroll.add(JobDescriptionText);
 		}
+		
 		refreshData();
 	}
 	
 	private void applyActionPerformed(java.awt.event.ActionEvent evt){
-		
+		//initialize a popup page to apply for the selected job
+		JobApplicationPage page = new JobApplicationPage(applicant, selectedCourseCode, selectedJob);
+       	page.setVisible(true);
+       	page.setLocation(this.getX()+20, this.getY()+20);
+		page.setSize(700,700);
 		refreshData();
 	}
 }
